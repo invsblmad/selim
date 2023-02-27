@@ -13,6 +13,5 @@ public class GateCategorySaveDto {
 
     private String description;
 
-    // getters and setters
 }
 
