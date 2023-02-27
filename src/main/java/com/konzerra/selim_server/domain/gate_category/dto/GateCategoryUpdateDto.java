@@ -15,5 +15,4 @@ public class GateCategoryUpdateDto {
 
     private String description;
 
-    // getters and setters
 }
