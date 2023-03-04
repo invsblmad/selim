@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface NewsMapper {
-    NewsDto mapToDto(News entity);
-    DetailedNewsDto mapToDetailedDto(News entity); // think over function name
+    NewsDto mapToDto(News news);
+    DetailedNewsDto mapToDetailedDto(News news);
 
 }

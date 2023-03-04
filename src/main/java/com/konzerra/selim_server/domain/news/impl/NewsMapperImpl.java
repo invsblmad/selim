@@ -7,22 +7,22 @@ import com.konzerra.selim_server.domain.news.dto.NewsDto;
 
 public class NewsMapperImpl implements NewsMapper {
     @Override
-    public NewsDto mapToDto(News entity) {
+    public NewsDto mapToDto(News news) {
         return new NewsDto(
-                entity.getId(),
-                entity.getTitle(),
-                entity.getCoverImage()
+                news.getId(),
+                news.getTitle(),
+                news.getCoverImage()
         );
 
     }
     @Override
-    public DetailedNewsDto mapToDetailedDto(News entity) {
+    public DetailedNewsDto mapToDetailedDto(News news) {
         return new DetailedNewsDto(
-                entity.getId(),
-                entity.getTitle(),
-                entity.getCoverImage(),
-                entity.getText(),
-                entity.getContentImage()
+                news.getId(),
+                news.getTitle(),
+                news.getCoverImage(),
+                news.getText(),
+                news.getContentImage()
         );
     }
 }
