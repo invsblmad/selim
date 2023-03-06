@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class NewsController {
     private final NewsService newsService;
+
     @GetMapping
     public Page<NewsDto> getAllNews(Pageable pageable) {
         return newsService.getAllNews(pageable);
