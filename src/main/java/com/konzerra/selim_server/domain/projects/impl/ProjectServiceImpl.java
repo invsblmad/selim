@@ -19,6 +19,6 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Page<ProjectDto> getAllProjects(Pageable pageable) {
         Page<Project> projects = projectRepository.findAll(pageable);
-        return projects.map(projectMapper::mapToDto);
+        return projects.map(projectMapper::projectEntityToDto);
     }
 }
