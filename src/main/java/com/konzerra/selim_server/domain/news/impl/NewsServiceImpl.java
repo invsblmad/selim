@@ -15,8 +15,10 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class NewsServiceImpl implements NewsService {
+
     private final NewsRepository newsRepository;
     private final NewsMapper newsMapper;
+
     @Override
     public Page<NewsDto> getAllNews(Pageable pageable) {
         Page<News> news = newsRepository.findAllByOrderByPublishedDateDesc(pageable);
