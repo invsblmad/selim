@@ -13,9 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/news")
 @RequiredArgsConstructor
-public class NewsController {
+public class    NewsController {
     private final NewsService newsService;
-
 
     @GetMapping
     public Page<NewsDto> getAllNews(Pageable pageable) {
