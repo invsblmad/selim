@@ -5,7 +5,7 @@ import com.konzerra.selim_server.domain.news.News;
 import com.konzerra.selim_server.domain.news.NewsMapper;
 import com.konzerra.selim_server.domain.news.NewsRepository;
 import com.konzerra.selim_server.domain.news.NewsService;
-import com.konzerra.selim_server.domain.news.dto.DetailedNewsDto;
+import com.konzerra.selim_server.domain.news.dto.NewsDetailsDto;
 import com.konzerra.selim_server.domain.news.dto.NewsDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,13 +20,13 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public Page<NewsDto> getAllNews(Pageable pageable) {
         Page<News> news = newsRepository.findAllByOrderByPublishedDateDesc(pageable);
-        return news.map(newsMapper::mapToDto);
+        return news.map(newsMapper::newsEntityToDto);
     }
 
     @Override
-    public DetailedNewsDto getNewsById(int id) {
+    public NewsDetailsDto getNewsById(int id) {
         News news = newsRepository.findById(id).orElseThrow(NewsNotFoundException::new);
-        return newsMapper.mapToDetailedDto(news);
+        return newsMapper.newsEntityToDetailsDto(news);
     }
 
     @Override
