@@ -5,5 +5,5 @@ import com.konzerra.selim_server.domain.common.StatusResponse;
 import org.springframework.http.ResponseEntity;
 
 public interface OrderService {
-    ResponseEntity<StatusResponse> createOrder(OrderDto orderDto);
+    ResponseEntity<StatusResponse> saveOrder(OrderDto orderDto);
 }
