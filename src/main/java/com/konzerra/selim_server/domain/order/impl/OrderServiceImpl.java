@@ -18,8 +18,8 @@ public class OrderServiceImpl implements OrderService {
     private final OrderMapper orderMapper;
 
     @Override
-    public ResponseEntity<StatusResponse> createOrder(OrderDto orderDto) {
-        Order order = orderMapper.mapToEntity(orderDto);
+    public ResponseEntity<StatusResponse> saveOrder(OrderDto orderDto) {
+        Order order = orderMapper.orderDtoToEntity(orderDto);
         orderRepository.save(order);
         return ResponseEntity.ok(new StatusResponse(HttpStatus.OK));
     }

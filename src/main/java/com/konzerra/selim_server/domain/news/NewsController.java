@@ -1,6 +1,6 @@
 package com.konzerra.selim_server.domain.news;
 
-import com.konzerra.selim_server.domain.news.dto.DetailedNewsDto;
+import com.konzerra.selim_server.domain.news.dto.NewsDetailsDto;
 import com.konzerra.selim_server.domain.news.dto.NewsDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,7 +22,7 @@ public class NewsController {
     }
 
     @GetMapping("/{id}")
-    public DetailedNewsDto getNewsById(@PathVariable int id) {
+    public NewsDetailsDto getNewsById(@PathVariable int id) {
         return newsService.getNewsById(id);
     }
 
