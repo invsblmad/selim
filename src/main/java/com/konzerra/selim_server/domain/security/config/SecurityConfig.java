@@ -1,6 +1,6 @@
-package com.konzerra.selim_server.domain.config;
+package com.konzerra.selim_server.domain.security.config;
 
-import com.konzerra.selim_server.domain.jwt.Jwks;
+import com.konzerra.selim_server.domain.security.jwt.Jwks;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;

@@ -1,4 +1,4 @@
-package com.konzerra.selim_server.domain.jwt;
+package com.konzerra.selim_server.domain.security.jwt;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;

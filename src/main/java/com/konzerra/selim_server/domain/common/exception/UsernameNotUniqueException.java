@@ -1,4 +1,4 @@
-package com.konzerra.selim_server.domain.exception;
+package com.konzerra.selim_server.domain.common.exception;
 
 public class UsernameNotUniqueException extends RuntimeException {
     public UsernameNotUniqueException(String message) {

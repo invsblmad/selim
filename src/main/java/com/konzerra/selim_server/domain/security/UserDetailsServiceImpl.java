@@ -1,4 +1,4 @@
-package com.konzerra.selim_server.domain.jwt.security;
+package com.konzerra.selim_server.domain.security;
 
 import com.konzerra.selim_server.domain.user.User;
 import com.konzerra.selim_server.domain.user.UserRepository;

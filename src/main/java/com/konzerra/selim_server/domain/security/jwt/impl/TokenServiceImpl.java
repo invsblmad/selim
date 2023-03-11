@@ -1,8 +1,8 @@
-package com.konzerra.selim_server.domain.jwt.impl;
+package com.konzerra.selim_server.domain.security.jwt.impl;
 
-import com.konzerra.selim_server.domain.jwt.TokenResponse;
-import com.konzerra.selim_server.domain.jwt.TokenService;
-import com.konzerra.selim_server.domain.jwt.security.UserDetailsImpl;
+import com.konzerra.selim_server.domain.security.jwt.TokenResponse;
+import com.konzerra.selim_server.domain.security.jwt.TokenService;
+import com.konzerra.selim_server.domain.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;

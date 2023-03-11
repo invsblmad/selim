@@ -1,10 +1,10 @@
-package com.konzerra.selim_server.domain.exception.handler;
+package com.konzerra.selim_server.domain.common.exception.handler;
 
-import com.konzerra.selim_server.domain.exception.NewsNotFoundException;
+import com.konzerra.selim_server.domain.common.exception.NewsNotFoundException;
+import com.konzerra.selim_server.domain.common.exception.PasswordNotConfirmedException;
 import com.konzerra.selim_server.domain.common.StatusResponse;
 import com.konzerra.selim_server.domain.common.ValidationErrorResponse;
-import com.konzerra.selim_server.domain.exception.PasswordNotConfirmedException;
-import com.konzerra.selim_server.domain.exception.UsernameNotUniqueException;
+import com.konzerra.selim_server.domain.common.exception.UsernameNotUniqueException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

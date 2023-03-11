@@ -1,6 +1,6 @@
 package com.konzerra.selim_server.domain.news.impl;
 
-import com.konzerra.selim_server.domain.exception.NewsNotFoundException;
+import com.konzerra.selim_server.domain.common.exception.NewsNotFoundException;
 import com.konzerra.selim_server.domain.news.News;
 import com.konzerra.selim_server.domain.news.NewsMapper;
 import com.konzerra.selim_server.domain.news.NewsRepository;
