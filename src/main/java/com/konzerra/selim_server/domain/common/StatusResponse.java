@@ -14,4 +14,9 @@ public class StatusResponse {
         this.message = httpStatus.getReasonPhrase();
         this.status = httpStatus.value();
     }
+
+    public StatusResponse(String message, int status) {
+        this.message = message;
+        this.status = status;
+    }
 }
