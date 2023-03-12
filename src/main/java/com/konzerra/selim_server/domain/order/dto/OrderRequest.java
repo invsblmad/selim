@@ -6,7 +6,7 @@ import lombok.Data;
 
 
 @Data
-public class OrderDto {
+public class OrderRequest {
 
     @NotBlank(message = "The customer name can't be null or empty")
     private String customerName;

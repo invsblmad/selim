@@ -1,4 +1,4 @@
-package com.konzerra.selim_server.domain.projects;
+package com.konzerra.selim_server.domain.project;
 
 import com.konzerra.selim_server.domain.user.User;
 import jakarta.persistence.*;

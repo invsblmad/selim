@@ -1,6 +1,6 @@
-package com.konzerra.selim_server.domain.projects;
+package com.konzerra.selim_server.domain.project;
 
-import com.konzerra.selim_server.domain.projects.dto.ProjectDto;
+import com.konzerra.selim_server.domain.project.dto.ProjectDto;
 import org.mapstruct.Mapper;
 
 

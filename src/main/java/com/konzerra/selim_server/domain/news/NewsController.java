@@ -1,14 +1,14 @@
 package com.konzerra.selim_server.domain.news;
 
+import com.konzerra.selim_server.common.StatusResponse;
 import com.konzerra.selim_server.domain.news.dto.NewsDetailsDto;
 import com.konzerra.selim_server.domain.news.dto.NewsDto;
+import com.konzerra.selim_server.domain.news.dto.NewsRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/news")
@@ -24,6 +24,16 @@ public class NewsController {
     @GetMapping("/{id}")
     public NewsDetailsDto getNewsById(@PathVariable int id) {
         return newsService.getNewsById(id);
+    }
+
+    @PostMapping
+    public ResponseEntity<StatusResponse> saveNews(@RequestBody NewsRequest newsRequest) {
+        return newsService.saveNews(newsRequest);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<StatusResponse> updateNews(@PathVariable int id, @RequestBody NewsRequest newsRequest) {
+        return newsService.updateNews(id, newsRequest);
     }
 
 }

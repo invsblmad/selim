@@ -1,10 +1,10 @@
-package com.konzerra.selim_server.domain.projects.impl;
+package com.konzerra.selim_server.domain.project.impl;
 
-import com.konzerra.selim_server.domain.projects.Project;
-import com.konzerra.selim_server.domain.projects.ProjectMapper;
-import com.konzerra.selim_server.domain.projects.ProjectRepository;
-import com.konzerra.selim_server.domain.projects.ProjectService;
-import com.konzerra.selim_server.domain.projects.dto.ProjectDto;
+import com.konzerra.selim_server.domain.project.Project;
+import com.konzerra.selim_server.domain.project.ProjectMapper;
+import com.konzerra.selim_server.domain.project.ProjectRepository;
+import com.konzerra.selim_server.domain.project.ProjectService;
+import com.konzerra.selim_server.domain.project.dto.ProjectDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

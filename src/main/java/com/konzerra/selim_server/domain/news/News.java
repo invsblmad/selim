@@ -26,4 +26,11 @@ public class News {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    public News(String title, String text, LocalDate publishedDate, User user) {
+        this.title = title;
+        this.text = text;
+        this.publishedDate = publishedDate;
+        this.user = user;
+    }
 }

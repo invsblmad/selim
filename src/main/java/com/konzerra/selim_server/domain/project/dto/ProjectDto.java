@@ -1,4 +1,4 @@
-package com.konzerra.selim_server.domain.projects.dto;
+package com.konzerra.selim_server.domain.project.dto;
 
 public record ProjectDto(
         int id,

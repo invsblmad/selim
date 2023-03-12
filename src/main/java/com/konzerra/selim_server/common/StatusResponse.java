@@ -1,4 +1,4 @@
-package com.konzerra.selim_server.domain.common;
+package com.konzerra.selim_server.common;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,5 +13,10 @@ public class StatusResponse {
     public StatusResponse(HttpStatus httpStatus) {
         this.message = httpStatus.getReasonPhrase();
         this.status = httpStatus.value();
+    }
+
+    public StatusResponse(String message, int status) {
+        this.message = message;
+        this.status = status;
     }
 }
