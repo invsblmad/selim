@@ -1,7 +1,7 @@
 package com.konzerra.selim_server.domain.order;
 
 import com.konzerra.selim_server.domain.order.dto.OrderRequest;
-import com.konzerra.selim_server.domain.common.StatusResponse;
+import com.konzerra.selim_server.common.StatusResponse;
 import com.konzerra.selim_server.domain.order.dto.OrderResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -5,7 +5,7 @@ import com.konzerra.selim_server.domain.order.OrderMapper;
 import com.konzerra.selim_server.domain.order.OrderRepository;
 import com.konzerra.selim_server.domain.order.OrderService;
 import com.konzerra.selim_server.domain.order.dto.OrderRequest;
-import com.konzerra.selim_server.domain.common.StatusResponse;
+import com.konzerra.selim_server.common.StatusResponse;
 import com.konzerra.selim_server.domain.order.dto.OrderResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

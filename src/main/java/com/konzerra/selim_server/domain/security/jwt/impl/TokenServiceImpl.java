@@ -1,10 +1,15 @@
 package com.konzerra.selim_server.domain.security.jwt.impl;
 
+import com.konzerra.selim_server.domain.security.UserDetailsServiceImpl;
 import com.konzerra.selim_server.domain.security.jwt.TokenResponse;
 import com.konzerra.selim_server.domain.security.jwt.TokenService;
 import com.konzerra.selim_server.domain.security.UserDetailsImpl;
+import com.konzerra.selim_server.domain.user.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
@@ -18,6 +23,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class TokenServiceImpl implements TokenService {
     private final JwtEncoder encoder;
+    private final UserDetailsServiceImpl userDetailsService;
     @Override
     public TokenResponse generateToken(UserDetailsImpl userDetails) {
         JwtClaimsSet claims = getJwtClaims(userDetails);
@@ -42,4 +48,14 @@ public class TokenServiceImpl implements TokenService {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(" "));
     }
+
+    @Override
+    public User getUserFromToken() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Jwt jwt = (Jwt) authentication.getPrincipal();
+        UserDetailsImpl userDetails = userDetailsService.loadUserByUsername(jwt.getSubject());
+        return userDetails.user();
+    }
+
+
 }

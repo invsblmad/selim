@@ -1,4 +1,4 @@
-package com.konzerra.selim_server.domain.security.config;
+package com.konzerra.selim_server.config;
 
 import com.konzerra.selim_server.domain.security.jwt.Jwks;
 import com.nimbusds.jose.JOSEException;

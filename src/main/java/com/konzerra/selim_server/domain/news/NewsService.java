@@ -1,6 +1,6 @@
 package com.konzerra.selim_server.domain.news;
 
-import com.konzerra.selim_server.domain.common.StatusResponse;
+import com.konzerra.selim_server.common.StatusResponse;
 import com.konzerra.selim_server.domain.news.dto.NewsDetailsDto;
 import com.konzerra.selim_server.domain.news.dto.NewsDto;
 import com.konzerra.selim_server.domain.news.dto.NewsRequest;
