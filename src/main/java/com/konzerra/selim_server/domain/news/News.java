@@ -1,6 +1,5 @@
 package com.konzerra.selim_server.domain.news;
 
-import com.konzerra.selim_server.domain.user.User;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,14 +22,5 @@ public class News {
     private String contentImage;
     @Column(name = "published_date")
     private LocalDate publishedDate;
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
 
-    public News(String title, String text, LocalDate publishedDate, User user) {
-        this.title = title;
-        this.text = text;
-        this.publishedDate = publishedDate;
-        this.user = user;
-    }
 }

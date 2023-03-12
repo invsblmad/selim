@@ -1,12 +1,12 @@
 package com.konzerra.selim_server.domain.order;
 
 import com.konzerra.selim_server.domain.order.dto.OrderRequest;
-import com.konzerra.selim_server.common.StatusResponse;
 import com.konzerra.selim_server.domain.order.dto.OrderResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.*;
 public class OrderController {
     private final OrderService orderService;
     @PostMapping
-    public ResponseEntity<StatusResponse> saveOrder(@Valid @RequestBody OrderRequest orderRequest) {
-        return orderService.saveOrder(orderRequest);
+    public ResponseEntity<OrderResponse> saveOrder(@Valid @RequestBody OrderRequest orderRequest) {
+        var response = orderService.saveOrder(orderRequest);
+        return ResponseEntity
+                .status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping

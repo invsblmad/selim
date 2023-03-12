@@ -6,5 +6,4 @@ import lombok.Data;
 public class NewsRequest {
     private String title;
     private String text;
-
 }

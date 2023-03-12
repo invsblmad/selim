@@ -1,6 +1,5 @@
 package com.konzerra.selim_server.domain.project;
 
-import com.konzerra.selim_server.domain.user.User;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +16,7 @@ public class Project {
 
     private String image;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    public Project(String image) {
+        this.image = image;
+    }
 }
