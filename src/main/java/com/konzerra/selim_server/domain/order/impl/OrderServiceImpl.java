@@ -5,13 +5,10 @@ import com.konzerra.selim_server.domain.order.OrderMapper;
 import com.konzerra.selim_server.domain.order.OrderRepository;
 import com.konzerra.selim_server.domain.order.OrderService;
 import com.konzerra.selim_server.domain.order.dto.OrderRequest;
-import com.konzerra.selim_server.common.StatusResponse;
 import com.konzerra.selim_server.domain.order.dto.OrderResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,10 +18,10 @@ public class OrderServiceImpl implements OrderService {
     private final OrderMapper orderMapper;
 
     @Override
-    public ResponseEntity<StatusResponse> saveOrder(OrderRequest orderRequest) {
+    public OrderResponse saveOrder(OrderRequest orderRequest) {
         Order order = orderMapper.orderDtoToEntity(orderRequest);
-        orderRepository.save(order);
-        return ResponseEntity.ok(new StatusResponse(HttpStatus.OK));
+        Order savedOrder = orderRepository.save(order);
+        return orderMapper.orderEntityToDto(savedOrder);
     }
 
     @Override
