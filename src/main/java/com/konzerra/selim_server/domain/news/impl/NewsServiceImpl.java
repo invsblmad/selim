@@ -22,10 +22,11 @@ import java.time.LocalDate;
 @Service
 @RequiredArgsConstructor
 public class NewsServiceImpl implements NewsService {
+
     private final NewsRepository newsRepository;
     private final NewsMapper newsMapper;
-
     private final TokenService tokenService;
+
     @Override
     public Page<NewsDto> getAllNews(Pageable pageable) {
         Page<News> news = newsRepository.findAllByOrderByPublishedDateDesc(pageable);
