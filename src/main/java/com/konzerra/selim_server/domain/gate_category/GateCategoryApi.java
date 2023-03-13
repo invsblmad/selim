@@ -12,7 +12,7 @@ public class GateCategoryApi {
     public static final String getById = publicPath + "/{id}";
 
     public static final String getAll = publicPath;
-    public static final String getAllPaginated = publicPath + "/{pageNumber}/{pageSize}/{sort}";
+    public static final String getAllPaginated = publicPath + "/{pageNumber}/{pageSize}/{sortDirection}/{sortField}";
 
 
 }

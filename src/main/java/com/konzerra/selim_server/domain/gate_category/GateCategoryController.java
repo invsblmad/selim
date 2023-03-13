@@ -59,11 +59,16 @@ public class GateCategoryController {
         return ResponseEntity.ok(dtos);
     }
 
-    @GetMapping(ApiPath.publicPath + "/gate_category/{pageNumber}/{pageSize}/{sort}")
+    @GetMapping(GateCategoryApi.getAllPaginated)
     public ResponseEntity<Page<GateCategoryResponseDto>> getAllPaginated(@PathVariable int pageNumber,
                                                                          @PathVariable int pageSize,
-                                                                         @PathVariable String sort) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(sort));
+                                                                         @PathVariable String sortDirection,
+                                                                         @PathVariable String sortField
+                                                                         ) {
+        Sort sort = Sort.by(
+                sortDirection.equals("ascending") ? Sort.Direction.ASC : Sort.Direction.DESC,
+                sortField);
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
         Page<GateCategoryResponseDto> dtos = gateCategoryService.findAllPaginated(pageable);
         return ResponseEntity.ok(dtos);
     }
