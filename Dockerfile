@@ -17,4 +17,4 @@ COPY . /app
 EXPOSE 8080
 
 # Run the application when the container starts
-CMD ["java", "-jar", "my-spring-app.jar"]
+CMD ["java", "-jar", "selim.jar"]
