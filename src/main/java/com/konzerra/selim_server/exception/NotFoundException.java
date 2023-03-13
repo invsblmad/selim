@@ -1,4 +1,4 @@
-package com.konzerra.selim_server.domain.exception;
+package com.konzerra.selim_server.exception;
 
 import lombok.Getter;
 

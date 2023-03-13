@@ -1,6 +1,6 @@
 package com.konzerra.selim_server.domain.gate.impl;
 
-import com.konzerra.selim_server.domain.exception.NotFoundException;
+import com.konzerra.selim_server.exception.NotFoundException;
 import com.konzerra.selim_server.domain.gate.Gate;
 import com.konzerra.selim_server.domain.gate.GateMapper;
 import com.konzerra.selim_server.domain.gate.GateRepository;
