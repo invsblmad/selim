@@ -1,8 +1,10 @@
 package com.konzerra.selim_server.domain.exception.handler;
 
+import com.konzerra.selim_server.domain.exception.ExceptionResponse;
 import com.konzerra.selim_server.domain.exception.NewsNotFoundException;
 import com.konzerra.selim_server.domain.common.StatusResponse;
 import com.konzerra.selim_server.domain.common.ValidationErrorResponse;
+import com.konzerra.selim_server.domain.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -19,6 +21,10 @@ public class CustomExceptionHandler {
     private static final HttpStatus FORBIDDEN = HttpStatus.FORBIDDEN;
     private static final HttpStatus NOT_FOUND = HttpStatus.NOT_FOUND;
 
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ExceptionResponse> handle(NotFoundException e) {
+        return new ResponseEntity<>(new ExceptionResponse(e.getLocalMessage()), NOT_FOUND);
+    }
     @ExceptionHandler(NewsNotFoundException.class)
     public ResponseEntity<StatusResponse> handle(NewsNotFoundException e) {
         return ResponseEntity
