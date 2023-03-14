@@ -20,7 +20,7 @@ jobs:
             username: ${{ secrets.DOCKER_USERNAME }}
             password: ${{ secrets.DOCKER_PASSWORD }}
   update_ssh_linode:
-      name: Telling Linode Server to Update
+      name: Telling Server to Update
       needs: "build-and-deploy"
       runs-on: ubuntu-latest
       steps:
