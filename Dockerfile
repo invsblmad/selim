@@ -12,9 +12,10 @@ WORKDIR /app
 
 # Copy the current directory contents into the container at /app
 COPY . /app
+RUN ./mvnw package
 
 # Make port 666 available to the world outside this container
 EXPOSE 666
 
 # Run the application when the container starts
-CMD ["java", "-jar", "selim.jar"]
+CMD ["java", "-jar", "target/selim.jar"]
