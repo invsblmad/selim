@@ -7,6 +7,7 @@ import com.konzerra.selim_server.domain.news.NewsService;
 import com.konzerra.selim_server.domain.news.dto.NewsDetailsResponse;
 import com.konzerra.selim_server.domain.news.dto.NewsResponse;
 import com.konzerra.selim_server.domain.news.dto.NewsRequest;
+import com.konzerra.selim_server.domain.news.dto.NewsView;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -30,15 +32,20 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public NewsDetailsResponse getNewsById(int id) {
-        News news = newsRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("News is not found with id " + id)
-        );
+        News news = findNewsById(id);
         return newsMapper.newsEntityToDetailsDto(news);
     }
 
+    private News findNewsById(int id) {
+        return newsRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("News is not found with id " + id)
+        );
+    }
+
     @Override
-    public Page<NewsResponse> getSimilarNewsTo(int newsId) {
-        return null;
+    public List<NewsView> getSimilarNewsTo(int newsId) {
+        News news = findNewsById(newsId);
+        return newsRepository.findSimilarNewsByText(news.getText());
     }
 
     @Override
@@ -52,9 +59,7 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public NewsDetailsResponse updateNews(int id, NewsRequest newsRequest) {
-        News news = newsRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("News is not found with id " + id)
-        );
+        News news = findNewsById(id);
 
         news.setTitle(newsRequest.getTitle());
         news.setText(newsRequest.getText());

@@ -10,5 +10,5 @@ public class NewsDetailsResponse {
     private String title;
     private String coverImage;
     private String text;
-    private String contentImag;
+    private String contentImage;
 }
