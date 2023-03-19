@@ -21,7 +21,9 @@ jobs:
           cache: maven
       - name: Build with Maven
         run: mvn -B package -DskipTests --file pom.xml
-      - name: Start server with PM2
-        run: /home/runner/selim_app/scripts/start-selim.sh
+      - name: Stop PM2
+        run: pm2 stop selim_web_server
+      - name: Start PM2
+        run: pm2 start actions_runner/start-selim.sh --selim_web_server
 
 
