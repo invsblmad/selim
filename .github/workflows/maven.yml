@@ -22,6 +22,6 @@ jobs:
       - name: Build with Maven
         run: mvn -B package -DskipTests --file pom.xml
       - name: Start server with PM2
-        run: ./selim_app/scripts/start-selim.sh
+        run: ./home/runner/selim_app/scripts/start-selim.sh
 
 
