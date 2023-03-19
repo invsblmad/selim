@@ -23,5 +23,5 @@ jobs:
         run: mvn -B package -DskipTests --file pom.xml
       - name: Start server with PM2
         run: ./selim_app/scripts/start-selim.sh
-        working-directory: ./actions_runner/_work/selim/selim
+
 
