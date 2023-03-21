@@ -16,29 +16,29 @@ public class ProjectController {
     private final ProjectService projectService;
 
     @GetMapping
-    public Page<ProjectResponse> getAllProjects(Pageable pageable) {
+    public Page<ProjectResponse> getAll(Pageable pageable) {
         return projectService.getAll(pageable);
     }
 
     @GetMapping("/{id}")
-    public ProjectResponse getProjectById(@PathVariable int id) {
+    public ProjectResponse getById(@PathVariable int id) {
         return projectService.getById(id);
     }
 
     @PostMapping
-    public ResponseEntity<ProjectResponse> saveProject(@RequestParam("file") MultipartFile multipartFile) {
+    public ResponseEntity<ProjectResponse> save(@RequestParam("file") MultipartFile multipartFile) {
         var response = projectService.save(multipartFile);
         return ResponseEntity
                 .status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{id}")
-    public ProjectResponse updateProjectById(@PathVariable int id, @RequestParam("file") MultipartFile multipartFile) {
+    public ProjectResponse updateById(@PathVariable int id, @RequestParam("file") MultipartFile multipartFile) {
         return projectService.updateById(id, multipartFile);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProjectById(@PathVariable int id) {
+    public void deleteById(@PathVariable int id) {
         projectService.deleteById(id);
     }
 }

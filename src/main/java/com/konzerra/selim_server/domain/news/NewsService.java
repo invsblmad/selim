@@ -3,17 +3,20 @@ package com.konzerra.selim_server.domain.news;
 import com.konzerra.selim_server.domain.news.dto.NewsDetailsResponse;
 import com.konzerra.selim_server.domain.news.dto.NewsResponse;
 import com.konzerra.selim_server.domain.news.dto.NewsRequest;
-import com.konzerra.selim_server.domain.news.dto.NewsView;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import java.util.Optional;
 
 public interface NewsService {
-    Page<NewsResponse> getAllNews(Pageable pageable);
-    NewsDetailsResponse getNewsById(int id);
-    List<NewsView> getSimilarNewsTo(int newsId);
+    Page<NewsResponse> getAll(Pageable pageable);
+    NewsDetailsResponse getById(int id);
+    Page<NewsResponse> getSimilarById(int id, Pageable pageable);
 
-    NewsDetailsResponse saveNews(NewsRequest newsRequest);
-    NewsDetailsResponse updateNews(int id, NewsRequest newsRequest);
+    NewsDetailsResponse save(NewsRequest newsRequest);
+
+    NewsDetailsResponse saveImages(int id, Optional<MultipartFile> coverImage,
+                                   Optional<MultipartFile> contentImage);
+    NewsDetailsResponse updateById(int id, NewsRequest newsRequest);
 }

@@ -1,6 +1,6 @@
 package com.konzerra.selim_server.exception.handler;
 
-import com.konzerra.selim_server.exception.WrongImageTypeException;
+import com.konzerra.selim_server.exception.ImageAlreadyExistsException;
 import com.konzerra.selim_server.exception.response.ErrorResponse;
 import com.konzerra.selim_server.exception.response.ValidationErrorResponse;
 import com.konzerra.selim_server.exception.FileStorageException;
@@ -65,8 +65,8 @@ public class CustomExceptionHandler {
                 .body(new ErrorResponse(e.getMessage()));
     }
 
-    @ExceptionHandler(WrongImageTypeException.class)
-    public ResponseEntity<ErrorResponse> handle(WrongImageTypeException e) {
+    @ExceptionHandler(ImageAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> handle(ImageAlreadyExistsException e) {
         return ResponseEntity
                 .status(BAD_REQUEST)
                 .body(new ErrorResponse(e.getMessage()));
