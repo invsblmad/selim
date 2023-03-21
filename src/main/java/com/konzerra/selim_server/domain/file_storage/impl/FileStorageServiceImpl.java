@@ -42,7 +42,7 @@ public class FileStorageServiceImpl implements FileStorageService {
             multipartFile.transferTo(new File(path));
             return path;
         } catch (IOException e) {
-            throw new FileStorageException("File storage error");
+            throw new FileStorageException(e.getMessage());
         }
     }
 
@@ -72,7 +72,7 @@ public class FileStorageServiceImpl implements FileStorageService {
         try {
             multipartFile.transferTo(existingFile);
         } catch (IOException e) {
-            throw new FileStorageException("File storage error");
+            throw new FileStorageException(e.getMessage());
         }
     }
 
