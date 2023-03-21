@@ -1,6 +1,7 @@
 package com.konzerra.selim_server.exception.handler;
 
 import com.konzerra.selim_server.exception.ImageAlreadyExistsException;
+import com.konzerra.selim_server.exception.NotFoundException;
 import com.konzerra.selim_server.exception.response.ErrorResponse;
 import com.konzerra.selim_server.exception.response.ValidationErrorResponse;
 import com.konzerra.selim_server.exception.FileStorageException;
@@ -27,6 +28,12 @@ public class CustomExceptionHandler {
         return ResponseEntity
                 .status(NOT_FOUND)
                 .body(new ErrorResponse(e.getMessage()));
+    }
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorResponse> handle(NotFoundException e) {
+        return ResponseEntity
+                .status(NOT_FOUND)
+                .body(new ErrorResponse(e.getLocalMessage()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
