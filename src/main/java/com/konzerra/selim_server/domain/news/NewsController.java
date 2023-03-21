@@ -9,6 +9,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/news")
@@ -17,25 +20,40 @@ public class NewsController {
     private final NewsService newsService;
 
     @GetMapping
-    public Page<NewsResponse> getAllNews(Pageable pageable) {
-        return newsService.getAllNews(pageable);
+    public Page<NewsResponse> getAll(Pageable pageable) {
+        return newsService.getAll(pageable);
     }
 
     @GetMapping("/{id}")
-    public NewsDetailsResponse getNewsById(@PathVariable int id) {
-        return newsService.getNewsById(id);
+    public NewsDetailsResponse getById(@PathVariable int id) {
+        return newsService.getById(id);
+    }
+
+    @GetMapping("/{id}/similar-news")
+    public Page<NewsResponse> getSimilarById(@PathVariable int id, Pageable pageable) {
+        return newsService.getSimilarById(id, pageable);
     }
 
     @PostMapping
-    public ResponseEntity<NewsDetailsResponse> saveNews(@RequestBody NewsRequest newsRequest) {
-        var response = newsService.saveNews(newsRequest);
+    public ResponseEntity<NewsDetailsResponse> save(@RequestBody NewsRequest newsRequest) {
+        var response = newsService.save(newsRequest);
         return ResponseEntity
                 .status(HttpStatus.CREATED).body(response);
     }
 
-    @PutMapping("/{id}")
-    public NewsDetailsResponse updateNews(@PathVariable int id, @RequestBody NewsRequest newsRequest) {
-        return newsService.updateNews(id, newsRequest);
+    @PostMapping("/{id}/images")
+    public NewsDetailsResponse saveImages(@PathVariable int id,
+                                          @RequestParam("cover") Optional<MultipartFile> coverImage,
+                                          @RequestParam("content") Optional<MultipartFile> contentImage
+    ) {
+        return newsService.saveImages(id, coverImage, contentImage);
     }
+
+    @PutMapping("/{id}")
+    public NewsDetailsResponse updateById(@PathVariable int id, @RequestBody NewsRequest newsRequest) {
+        return newsService.updateById(id, newsRequest);
+    }
+
+
 
 }
