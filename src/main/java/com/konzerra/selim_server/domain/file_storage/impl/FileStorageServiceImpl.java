@@ -59,7 +59,6 @@ public class FileStorageServiceImpl implements FileStorageService {
         assert originalFileName != null;
 
         return UUID.randomUUID() + getFileExtension(originalFileName);
-
     }
 
     private String getFileExtension(String fileName) {
