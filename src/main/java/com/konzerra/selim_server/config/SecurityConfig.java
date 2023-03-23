@@ -9,7 +9,6 @@ import com.nimbusds.jose.proc.SecurityContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -44,11 +43,9 @@ public class SecurityConfig {
         return http
                 .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests( auth -> auth
-                        .requestMatchers("/auth/**", "/error/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/news/**", "/projects").permitAll()
-                        .requestMatchers( "/api/v1/public/**","/swagger-ui/**","/v3/api-docs/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/orders").permitAll()
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers( "/api/v1/public/**", "/error/**",
+                                "/swagger-ui/**","/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

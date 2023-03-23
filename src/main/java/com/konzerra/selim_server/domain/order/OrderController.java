@@ -11,18 +11,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderService orderService;
-    @PostMapping
+    @PostMapping("/public/orders")
     public ResponseEntity<OrderResponse> saveOrder(@Valid @RequestBody OrderRequest orderRequest) {
         var response = orderService.saveOrder(orderRequest);
         return ResponseEntity
                 .status(HttpStatus.CREATED).body(response);
     }
 
-    @GetMapping
+    @GetMapping("/protected/orders")
     public Page<OrderResponse> getAllOrders(Pageable pageable) {
         return orderService.getAllOrders(pageable);
     }
