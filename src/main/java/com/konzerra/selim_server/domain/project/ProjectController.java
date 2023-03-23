@@ -10,34 +10,34 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/projects")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class ProjectController {
     private final ProjectService projectService;
 
-    @GetMapping
+    @GetMapping("/public/projects")
     public Page<ProjectResponse> getAll(Pageable pageable) {
         return projectService.getAll(pageable);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/public/projects/{id}")
     public ProjectResponse getById(@PathVariable int id) {
         return projectService.getById(id);
     }
 
-    @PostMapping
+    @PostMapping("/protected/projects")
     public ResponseEntity<ProjectResponse> save(@RequestParam("file") MultipartFile multipartFile) {
         var response = projectService.save(multipartFile);
         return ResponseEntity
                 .status(HttpStatus.CREATED).body(response);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/protected/projects/{id}")
     public ProjectResponse updateById(@PathVariable int id, @RequestParam("file") MultipartFile multipartFile) {
         return projectService.updateById(id, multipartFile);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/protected/projects/{id}")
     public void deleteById(@PathVariable int id) {
         projectService.deleteById(id);
     }

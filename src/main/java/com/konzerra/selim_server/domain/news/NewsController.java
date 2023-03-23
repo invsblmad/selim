@@ -14,34 +14,34 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/news")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class NewsController {
     private final NewsService newsService;
 
-    @GetMapping
+    @GetMapping("/public/news")
     public Page<NewsResponse> getAll(Pageable pageable) {
         return newsService.getAll(pageable);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/public/news/{id}")
     public NewsDetailsResponse getById(@PathVariable int id) {
         return newsService.getById(id);
     }
 
-    @GetMapping("/{id}/similar-news")
+    @GetMapping("/public/news/{id}/similar-news")
     public Page<NewsResponse> getSimilarById(@PathVariable int id, Pageable pageable) {
         return newsService.getSimilarById(id, pageable);
     }
 
-    @PostMapping
+    @PostMapping("/protected/news")
     public ResponseEntity<NewsDetailsResponse> save(@RequestBody NewsRequest newsRequest) {
         var response = newsService.save(newsRequest);
         return ResponseEntity
                 .status(HttpStatus.CREATED).body(response);
     }
 
-    @PostMapping("/{id}/images")
+    @PostMapping("/protected/news/{id}/images")
     public NewsDetailsResponse saveImages(@PathVariable int id,
                                           @RequestParam("cover") Optional<MultipartFile> coverImage,
                                           @RequestParam("content") Optional<MultipartFile> contentImage
@@ -49,7 +49,7 @@ public class NewsController {
         return newsService.saveImages(id, coverImage, contentImage);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/protected/news/{id}")
     public NewsDetailsResponse updateById(@PathVariable int id, @RequestBody NewsRequest newsRequest) {
         return newsService.updateById(id, newsRequest);
     }
