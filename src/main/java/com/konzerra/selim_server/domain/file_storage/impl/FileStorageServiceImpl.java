@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Service
 public class FileStorageServiceImpl implements FileStorageService {
-    @Value("${file.storage.path}")
+    @Value("${spring.servlet.multipart.location}")
     private String rootPath;
     private String projectsPath;
     private String newsPath;
