@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -30,8 +31,8 @@ public class NewsController {
     }
 
     @GetMapping("/public/news/{id}/similar-news")
-    public Page<NewsResponse> getSimilarById(@PathVariable int id, Pageable pageable) {
-        return newsService.getSimilarById(id, pageable);
+    public List<NewsResponse> getSimilarById(@PathVariable int id) {
+        return newsService.getSimilarById(id);
     }
 
     @PostMapping("/protected/news")

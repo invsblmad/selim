@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -46,10 +47,10 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public Page<NewsResponse> getSimilarById(int id, Pageable pageable) {
+    public List<NewsResponse> getSimilarById(int id) {
         News news = findNewsById(id);
-        var similarNews = newsRepository.findSimilar(news.getId(), news.getText(), pageable);
-        return similarNews.map(newsMapper::newsEntityToDto);
+        var similarNews = newsRepository.findSimilar(news.getId(), news.getText());
+        return similarNews.stream().map(newsMapper::newsEntityToDto).toList();
     }
 
     @Override
