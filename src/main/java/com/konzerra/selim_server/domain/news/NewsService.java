@@ -7,12 +7,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface NewsService {
     Page<NewsResponse> getAll(Pageable pageable);
     NewsDetailsResponse getById(int id);
-    Page<NewsResponse> getSimilarById(int id, Pageable pageable);
+    List<NewsResponse> getSimilarById(int id);
 
     NewsDetailsResponse save(NewsRequest newsRequest);
 
