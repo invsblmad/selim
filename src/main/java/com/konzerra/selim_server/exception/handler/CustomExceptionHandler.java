@@ -1,12 +1,8 @@
 package com.konzerra.selim_server.exception.handler;
 
-import com.konzerra.selim_server.exception.ImageAlreadyExistsException;
-import com.konzerra.selim_server.exception.NotFoundException;
+import com.konzerra.selim_server.exception.*;
 import com.konzerra.selim_server.exception.response.ErrorResponse;
 import com.konzerra.selim_server.exception.response.ValidationErrorResponse;
-import com.konzerra.selim_server.exception.FileStorageException;
-import com.konzerra.selim_server.exception.PasswordNotConfirmedException;
-import com.konzerra.selim_server.exception.UsernameNotUniqueException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -74,6 +70,13 @@ public class CustomExceptionHandler {
 
     @ExceptionHandler(ImageAlreadyExistsException.class)
     public ResponseEntity<ErrorResponse> handle(ImageAlreadyExistsException e) {
+        return ResponseEntity
+                .status(BAD_REQUEST)
+                .body(new ErrorResponse(e.getMessage()));
+    }
+
+    @ExceptionHandler(ImageNotExistsException.class)
+    public ResponseEntity<ErrorResponse> handle(ImageNotExistsException e) {
         return ResponseEntity
                 .status(BAD_REQUEST)
                 .body(new ErrorResponse(e.getMessage()));

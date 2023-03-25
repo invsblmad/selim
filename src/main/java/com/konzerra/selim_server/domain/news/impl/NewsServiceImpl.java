@@ -9,6 +9,7 @@ import com.konzerra.selim_server.domain.news.dto.NewsDetailsResponse;
 import com.konzerra.selim_server.domain.news.dto.NewsResponse;
 import com.konzerra.selim_server.domain.news.dto.NewsRequest;
 import com.konzerra.selim_server.exception.ImageAlreadyExistsException;
+import com.konzerra.selim_server.exception.ImageNotExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -63,20 +64,20 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public NewsDetailsResponse saveImages(int id, Optional<MultipartFile> coverImage,
+    public NewsDetailsResponse saveImagesById(int id, Optional<MultipartFile> coverImage,
                                           Optional<MultipartFile> contentImage) {
         News news = findNewsById(id);
 
-        coverImage.ifPresent(multipartFile -> saveCoverImage(news, multipartFile));
-        contentImage.ifPresent(multipartFile -> saveContentImage(news, multipartFile));
+        coverImage.ifPresent(file -> saveCoverImage(news, file));
+        contentImage.ifPresent(file -> saveContentImage(news, file));
 
         return newsMapper.newsEntityToDetailsDto(news);
     }
 
     private void saveCoverImage(News news, MultipartFile coverImage) {
         if (news.getCoverImage() != null)
-            throw new ImageAlreadyExistsException("The cover image of the news " +
-                    "is already exists: " + news.getCoverImage());
+            throw new ImageAlreadyExistsException("The cover image of the news" +
+                    "already exists: " + news.getCoverImage());
         String path = fileStorageService.save(coverImage, "news");
         news.setCoverImage(path);
     }
@@ -84,7 +85,7 @@ public class NewsServiceImpl implements NewsService {
     private void saveContentImage(News news, MultipartFile contentImage) {
         if (news.getContentImage() != null)
             throw new ImageAlreadyExistsException("The content image of the news " +
-                    "is already exists: " + news.getContentImage());
+                    "already exists: " + news.getContentImage());
         String path = fileStorageService.save(contentImage, "news");
         news.setContentImage(path);
     }
@@ -98,5 +99,23 @@ public class NewsServiceImpl implements NewsService {
 
         News updatedNews = newsRepository.save(news);
         return newsMapper.newsEntityToDetailsDto(updatedNews);
+    }
+
+    @Override
+    public NewsDetailsResponse updateImagesById(int id, Optional<MultipartFile> coverImage,
+                                                Optional<MultipartFile> contentImage) {
+        News news = findNewsById(id);
+        coverImage.ifPresent(
+                file -> updateImage(file, news.getCoverImage(), "cover"));
+
+        contentImage.ifPresent(
+                file -> updateImage(file, news.getContentImage(), "content"));
+        return newsMapper.newsEntityToDetailsDto(news);
+    }
+
+    private void updateImage(MultipartFile image, String path, String imageType) {
+        if (path == null)
+            throw new ImageNotExistsException("The " + imageType + " image of the news doesn't exist");
+        fileStorageService.update(image, path);
     }
 }

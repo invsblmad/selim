@@ -43,16 +43,24 @@ public class NewsController {
     }
 
     @PostMapping("/protected/news/{id}/images")
-    public NewsDetailsResponse saveImages(@PathVariable int id,
-                                          @RequestParam("cover") Optional<MultipartFile> coverImage,
-                                          @RequestParam("content") Optional<MultipartFile> contentImage
+    public NewsDetailsResponse saveImagesById(@PathVariable int id,
+                                              @RequestParam("cover") Optional<MultipartFile> coverImage,
+                                              @RequestParam("content") Optional<MultipartFile> contentImage
     ) {
-        return newsService.saveImages(id, coverImage, contentImage);
+        return newsService.saveImagesById(id, coverImage, contentImage);
     }
 
     @PutMapping("/protected/news/{id}")
     public NewsDetailsResponse updateById(@PathVariable int id, @RequestBody NewsRequest newsRequest) {
         return newsService.updateById(id, newsRequest);
+    }
+
+    @PutMapping("/protected/news/{id}/images")
+    public NewsDetailsResponse updateImagesById(@PathVariable int id,
+                                                @RequestParam("cover") Optional<MultipartFile> coverImage,
+                                                @RequestParam("content") Optional<MultipartFile> contentImage
+    ) {
+        return newsService.updateImagesById(id, coverImage, contentImage);
     }
 
 

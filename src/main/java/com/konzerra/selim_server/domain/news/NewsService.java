@@ -17,7 +17,10 @@ public interface NewsService {
 
     NewsDetailsResponse save(NewsRequest newsRequest);
 
-    NewsDetailsResponse saveImages(int id, Optional<MultipartFile> coverImage,
+    NewsDetailsResponse saveImagesById(int id, Optional<MultipartFile> coverImage,
                                    Optional<MultipartFile> contentImage);
     NewsDetailsResponse updateById(int id, NewsRequest newsRequest);
+
+    NewsDetailsResponse updateImagesById(int id, Optional<MultipartFile> coverImage,
+                                         Optional<MultipartFile> contentImage);
 }
