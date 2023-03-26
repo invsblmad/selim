@@ -13,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class ProjectServiceImpl implements ProjectService {
@@ -41,7 +43,8 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public ProjectResponse save(MultipartFile multipartFile) {
         String imagePath = fileStorageService.save(multipartFile, "projects");
-        Project savedProject = projectRepository.save(new Project(imagePath));
+        Project savedProject = projectRepository.save(
+                new Project(imagePath, LocalDateTime.now()));
         return projectMapper.projectEntityToDto(savedProject);
     }
 

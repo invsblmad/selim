@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "tb_projects")
 @Data
@@ -16,7 +18,11 @@ public class Project {
 
     private String image;
 
-    public Project(String image) {
+    @Column(name = "published_date")
+    private LocalDateTime publishedDate;
+
+    public Project(String image, LocalDateTime publishedDate) {
         this.image = image;
+        this.publishedDate = publishedDate;
     }
 }
