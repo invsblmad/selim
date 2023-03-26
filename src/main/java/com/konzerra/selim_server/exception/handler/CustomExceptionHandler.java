@@ -67,18 +67,4 @@ public class CustomExceptionHandler {
                 .status(BAD_REQUEST)
                 .body(new ErrorResponse(e.getMessage()));
     }
-
-    @ExceptionHandler(ImageAlreadyExistsException.class)
-    public ResponseEntity<ErrorResponse> handle(ImageAlreadyExistsException e) {
-        return ResponseEntity
-                .status(BAD_REQUEST)
-                .body(new ErrorResponse(e.getMessage()));
-    }
-
-    @ExceptionHandler(ImageNotExistsException.class)
-    public ResponseEntity<ErrorResponse> handle(ImageNotExistsException e) {
-        return ResponseEntity
-                .status(BAD_REQUEST)
-                .body(new ErrorResponse(e.getMessage()));
-    }
 }
