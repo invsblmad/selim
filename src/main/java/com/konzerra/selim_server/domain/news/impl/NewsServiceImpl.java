@@ -8,7 +8,6 @@ import com.konzerra.selim_server.domain.news.NewsService;
 import com.konzerra.selim_server.domain.news.dto.NewsDetailsResponse;
 import com.konzerra.selim_server.domain.news.dto.NewsResponse;
 import com.konzerra.selim_server.domain.news.dto.NewsRequest;
-import com.konzerra.selim_server.exception.ImageAlreadyExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -63,33 +62,6 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public NewsDetailsResponse saveImages(int id, Optional<MultipartFile> coverImage,
-                                          Optional<MultipartFile> contentImage) {
-        News news = findNewsById(id);
-
-        coverImage.ifPresent(multipartFile -> saveCoverImage(news, multipartFile));
-        contentImage.ifPresent(multipartFile -> saveContentImage(news, multipartFile));
-
-        return newsMapper.newsEntityToDetailsDto(news);
-    }
-
-    private void saveCoverImage(News news, MultipartFile coverImage) {
-        if (news.getCoverImage() != null)
-            throw new ImageAlreadyExistsException("The cover image of the news " +
-                    "is already exists: " + news.getCoverImage());
-        String path = fileStorageService.save(coverImage, "news");
-        news.setCoverImage(path);
-    }
-
-    private void saveContentImage(News news, MultipartFile contentImage) {
-        if (news.getContentImage() != null)
-            throw new ImageAlreadyExistsException("The content image of the news " +
-                    "is already exists: " + news.getContentImage());
-        String path = fileStorageService.save(contentImage, "news");
-        news.setContentImage(path);
-    }
-
-    @Override
     public NewsDetailsResponse updateById(int id, NewsRequest newsRequest) {
         News news = findNewsById(id);
 
@@ -98,5 +70,48 @@ public class NewsServiceImpl implements NewsService {
 
         News updatedNews = newsRepository.save(news);
         return newsMapper.newsEntityToDetailsDto(updatedNews);
+    }
+
+    @Override
+    public NewsDetailsResponse updateImagesById(int id, Optional<MultipartFile> coverImage,
+                                                Optional<MultipartFile> contentImage) {
+        News news = findNewsById(id);
+
+        coverImage.ifPresent(image -> updateCoverImage(news, image));
+        contentImage.ifPresent(image -> updateContentImage(news, image));
+
+        return newsMapper.newsEntityToDetailsDto(news);
+    }
+
+    private void updateCoverImage(News news, MultipartFile coverImage) {
+        if (news.getCoverImage() == null) {
+            String path = fileStorageService.save(coverImage, "news");
+            news.setCoverImage(path);
+        } else {
+            fileStorageService.update(coverImage, news.getCoverImage());
+        }
+    }
+
+    private void updateContentImage(News news, MultipartFile contentImage) {
+        if (news.getContentImage() == null) {
+            String path = fileStorageService.save(contentImage, "news");
+            news.setContentImage(path);
+        } else {
+            fileStorageService.update(contentImage, news.getContentImage());
+        }
+    }
+
+    @Override
+    public void deleteById(int id) {
+        News news = findNewsById(id);
+
+        deleteIfExists(news.getCoverImage());
+        deleteIfExists(news.getContentImage());
+
+        newsRepository.delete(news);
+    }
+
+    private void deleteIfExists(String imagePath) {
+        if (imagePath != null) fileStorageService.delete(imagePath);
     }
 }

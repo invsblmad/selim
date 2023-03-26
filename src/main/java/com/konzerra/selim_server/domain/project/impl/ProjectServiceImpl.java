@@ -48,7 +48,6 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public ProjectResponse updateById(int id, MultipartFile multipartFile) {
         Project project = findProjectById(id);
-
         fileStorageService.update(multipartFile, project.getImage());
         return projectMapper.projectEntityToDto(project);
     }
@@ -56,7 +55,6 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void deleteById(int id) {
         Project project = findProjectById(id);
-
         fileStorageService.delete(project.getImage());
         projectRepository.delete(project);
     }

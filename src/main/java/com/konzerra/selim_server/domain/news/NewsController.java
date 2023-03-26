@@ -42,19 +42,22 @@ public class NewsController {
                 .status(HttpStatus.CREATED).body(response);
     }
 
-    @PostMapping("/protected/news/{id}/images")
-    public NewsDetailsResponse saveImages(@PathVariable int id,
-                                          @RequestParam("cover") Optional<MultipartFile> coverImage,
-                                          @RequestParam("content") Optional<MultipartFile> contentImage
-    ) {
-        return newsService.saveImages(id, coverImage, contentImage);
-    }
-
     @PutMapping("/protected/news/{id}")
     public NewsDetailsResponse updateById(@PathVariable int id, @RequestBody NewsRequest newsRequest) {
         return newsService.updateById(id, newsRequest);
     }
 
+    @PutMapping("/protected/news/{id}/images")
+    public NewsDetailsResponse updateImagesById(@PathVariable int id,
+                                                @RequestParam("cover") Optional<MultipartFile> coverImage,
+                                                @RequestParam("content") Optional<MultipartFile> contentImage
+    ) {
+        return newsService.updateImagesById(id, coverImage, contentImage);
+    }
 
+    @DeleteMapping("/protected/news/{id}")
+    public void deleteById(@PathVariable int id) {
+        newsService.deleteById(id);
+    }
 
 }
