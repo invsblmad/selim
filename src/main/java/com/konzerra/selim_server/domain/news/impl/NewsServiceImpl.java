@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +30,7 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public Page<NewsResponse> getAll(Pageable pageable) {
-        Page<News> news = newsRepository.findAllByOrderByPublishedDateDesc(pageable);
+        Page<News> news = newsRepository.findAll(pageable);
         return news.map(newsMapper::newsEntityToDto);
     }
 
