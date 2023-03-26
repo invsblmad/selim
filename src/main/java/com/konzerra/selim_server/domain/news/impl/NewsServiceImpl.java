@@ -81,7 +81,8 @@ public class NewsServiceImpl implements NewsService {
         coverImage.ifPresent(image -> updateCoverImage(news, image));
         contentImage.ifPresent(image -> updateContentImage(news, image));
 
-        return newsMapper.newsEntityToDetailsDto(news);
+        News updatedNews = newsRepository.save(news);
+        return newsMapper.newsEntityToDetailsDto(updatedNews);
     }
 
     private void updateCoverImage(News news, MultipartFile coverImage) {
