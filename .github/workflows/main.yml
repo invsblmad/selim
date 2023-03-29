@@ -19,10 +19,6 @@ jobs:
         java-version: '17'
         distribution: 'adopt'
         cache: maven
-    - name: Stop PM2
-      run: pm2 stop selim_web_server
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-    - name: Start PM2
-      run: pm2 start /home/runner/actions-runner/selim_start.sh --name selim_web_server --env selim_web_server
     
