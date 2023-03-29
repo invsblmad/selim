@@ -19,7 +19,7 @@ public class OrderHistory {
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
-    @Column(name = "recording_date")
+    @Column(name = "recording_date", columnDefinition = "TIMESTAMP(0) WITHOUT TIME ZONE")
     private LocalDateTime recordingDate;
 
     @ManyToOne

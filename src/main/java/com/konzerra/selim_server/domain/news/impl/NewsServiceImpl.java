@@ -15,8 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDate;
-
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,13 +30,13 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public Page<NewsResponse> getAll(Pageable pageable) {
         Page<News> news = newsRepository.findAll(pageable);
-        return news.map(newsMapper::newsEntityToDto);
+        return news.map(newsMapper::entityToDto);
     }
 
     @Override
     public NewsDetailsResponse getById(int id) {
         News news = findNewsById(id);
-        return newsMapper.newsEntityToDetailsDto(news);
+        return newsMapper.entityToDetailsDto(news);
     }
 
     private News findNewsById(int id) {
@@ -50,16 +49,16 @@ public class NewsServiceImpl implements NewsService {
     public List<NewsResponse> getSimilarById(int id) {
         News news = findNewsById(id);
         var similarNews = newsRepository.findSimilar(news.getId(), news.getText());
-        return similarNews.stream().map(newsMapper::newsEntityToDto).toList();
+        return similarNews.stream().map(newsMapper::entityToDto).toList();
     }
 
     @Override
     public NewsDetailsResponse save(NewsRequest newsRequest) {
-        News news = newsMapper.newsDtoToEntity(newsRequest);
-        news.setPublishedDate(LocalDate.now());
+        News news = newsMapper.dtoToEntity(newsRequest);
+        news.setPublishedDate(LocalDateTime.now());
 
         News savedNews = newsRepository.save(news);
-        return newsMapper.newsEntityToDetailsDto(savedNews);
+        return newsMapper.entityToDetailsDto(savedNews);
     }
 
     @Override
@@ -70,7 +69,7 @@ public class NewsServiceImpl implements NewsService {
         news.setText(newsRequest.getText());
 
         News updatedNews = newsRepository.save(news);
-        return newsMapper.newsEntityToDetailsDto(updatedNews);
+        return newsMapper.entityToDetailsDto(updatedNews);
     }
 
     @Override
@@ -82,7 +81,7 @@ public class NewsServiceImpl implements NewsService {
         contentImage.ifPresent(image -> updateContentImage(news, image));
 
         News updatedNews = newsRepository.save(news);
-        return newsMapper.newsEntityToDetailsDto(updatedNews);
+        return newsMapper.entityToDetailsDto(updatedNews);
     }
 
     private void updateCoverImage(News news, MultipartFile coverImage) {

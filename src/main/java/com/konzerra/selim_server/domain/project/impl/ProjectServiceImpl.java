@@ -25,13 +25,13 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Page<ProjectResponse> getAll(Pageable pageable) {
         Page<Project> projects = projectRepository.findAll(pageable);
-        return projects.map(projectMapper::projectEntityToDto);
+        return projects.map(projectMapper::entityToDto);
     }
 
     @Override
     public ProjectResponse getById(int id) {
         Project project = findProjectById(id);
-        return projectMapper.projectEntityToDto(project);
+        return projectMapper.entityToDto(project);
     }
 
     private Project findProjectById(int id) {
@@ -45,14 +45,14 @@ public class ProjectServiceImpl implements ProjectService {
         String imagePath = fileStorageService.save(multipartFile, "projects");
         Project savedProject = projectRepository.save(
                 new Project(imagePath, LocalDateTime.now()));
-        return projectMapper.projectEntityToDto(savedProject);
+        return projectMapper.entityToDto(savedProject);
     }
 
     @Override
     public ProjectResponse updateById(int id, MultipartFile multipartFile) {
         Project project = findProjectById(id);
         fileStorageService.update(multipartFile, project.getImage());
-        return projectMapper.projectEntityToDto(project);
+        return projectMapper.entityToDto(project);
     }
 
     @Override

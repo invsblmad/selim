@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tb_news")
@@ -21,7 +21,7 @@ public class News {
     private String coverImage;
     @Column(name = "content_image")
     private String contentImage;
-    @Column(name = "published_date")
-    private LocalDate publishedDate;
+    @Column(name = "published_date", columnDefinition = "TIMESTAMP(0) WITHOUT TIME ZONE")
+    private LocalDateTime publishedDate;
 
 }
