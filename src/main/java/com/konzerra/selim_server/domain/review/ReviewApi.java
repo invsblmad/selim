@@ -7,10 +7,13 @@ public class ReviewApi {
     private static final String protectedPath = ApiPath.protectedPath + basePath;
     private static final String publicPath = ApiPath.publicPath + basePath;;
 
-    public static final String findByIdPath = publicPath + "/{id}";
-    public static final String findAllPaginated  =  publicPath + "/{pageNumber}/{pageSize}";
+    public static final String getAll = publicPath;
+    public static final String findById = publicPath + "/{id}";
+    public static final String getAllByCategoryId = publicPath+"/{categoryId}";
 
-    public static final String savePath = protectedPath;
-    public static final String updatePath = protectedPath;
-    public static final String deleteByIdPath = protectedPath + "/{id}";
+    public static final String getAllPaginated = publicPath + "/{categoryId}/{pageNumber}/{pageSize}/{sortDirection}/{sortField}";
+
+    public static final String save = protectedPath;
+    public static final String update = protectedPath;
+    public static final String deleteById = protectedPath + "/{id}";
 }
