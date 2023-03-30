@@ -33,7 +33,7 @@ jobs:
 
     - name: Deploy containers
       run: |
-        cd /home/team5/actions-runner/_work/selim
+        cd /home/team5/actions-runner/_work/selim/selim
         sudo docker-compose up -d
 
 
