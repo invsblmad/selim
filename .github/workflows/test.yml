@@ -19,6 +19,22 @@ jobs:
         java-version: '17'
         distribution: 'adopt'
         cache: maven
+
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+
+    - name: Build Docker image
+      run: docker build -t app/selim:latest .
+
+    - name: Push Docker image
+      run: |
+        echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+        docker push app/selim:latest
+
+    - name: Deploy containers
+      run: |
+        cd /home/team5/actions-runner/_work/selim
+        sudo docker-compose up -d
+
+
     
