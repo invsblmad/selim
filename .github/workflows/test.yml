@@ -23,18 +23,5 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
-    - name: Build Docker image
-      run: docker build -t invsblmad/selim:latest .
-
-    - name: Push Docker image
-      run: |
-        echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin 
-        docker push invsblmad/selim:latest
-
-    - name: Deploy containers
-      run: |
-        cd /home/team5/actions-runner/_work/selim/selim
-        sudo docker-compose up -d
-
 
     
