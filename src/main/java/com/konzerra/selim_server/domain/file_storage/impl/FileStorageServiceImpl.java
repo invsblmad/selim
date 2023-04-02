@@ -18,19 +18,31 @@ public class FileStorageServiceImpl implements FileStorageService {
     private String projectsPath;
     private String newsPath;
 
+    private String gateCategory;
+    private String gate;
+    private String review;
+
     @PostConstruct
     private void init() {
         this.projectsPath = rootPath + "/projects";
         this.newsPath = rootPath + "/news";
+        this.gateCategory = rootPath + "/common";
+        this.gate = rootPath + "/gate";
+        this.review = rootPath + "/review";
 
         checkIfPathExists(rootPath);
         checkIfPathExists(projectsPath);
         checkIfPathExists(newsPath);
+        checkIfPathExists(gateCategory);
+        checkIfPathExists(gate);
+        checkIfPathExists(review);
+
     }
 
     private void checkIfPathExists(String path) {
         File file = new File(path);
         if (!file.exists()) {
+            System.out.println(path);
             file.mkdirs();
         }
     }
@@ -46,10 +58,25 @@ public class FileStorageServiceImpl implements FileStorageService {
         }
     }
 
+    @Override
+    public File findByName(String fileName, String folder) {
+        File existingFile = null;
+        try {
+            existingFile = new File(rootPath+"/"+folder+"/"+fileName);
+            System.out.println("cathching file");
+        } catch (Exception e) {
+            throw new FileStorageException(e.getMessage());
+        }
+        return existingFile;
+    }
+
     private String getFullPathOf(String folder) {
         return switch (folder) {
             case "news" -> newsPath;
             case "projects" -> projectsPath;
+            case "gateCategory" -> gateCategory;
+            case "gate" -> gate;
+            case "review" -> review;
             default -> null;
         };
     }
@@ -66,8 +93,8 @@ public class FileStorageServiceImpl implements FileStorageService {
     }
 
     @Override
-    public void update(MultipartFile multipartFile, String existingPath) {
-        File existingFile = new File(existingPath);
+    public void update(MultipartFile multipartFile, String fileName) {
+        File existingFile = new File(fileName);
         try {
             multipartFile.transferTo(existingFile);
         } catch (IOException e) {

@@ -1,55 +1,52 @@
 package com.konzerra.selim_server.domain.image;
 
 
+import com.konzerra.selim_server.domain.file_storage.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 @RestController
 
 public class ImageController {
-    private final ImageService imageService;
+
+    private final FileStorageService fileStorageService;
 
     @Autowired
-    public ImageController(ImageService imageService) {
-        this.imageService = imageService;
+    public ImageController(FileStorageService fileStorageService) {
+        this.fileStorageService = fileStorageService;
     }
 
-    @PostMapping(ImageApi.save)
-    public ResponseEntity<Image> saveImage(@RequestParam("file") MultipartFile file) throws IOException {
-        Image image = new Image();
-        image.setName(file.getOriginalFilename());
-        image.setContent(file.getBytes());
-        image = imageService.save(image);
-        String imageUrl = imageService.getImageUrl(image.getId());
-        image.setName(imageUrl);
-        return ResponseEntity.ok(imageService.update(image.getId(), image));
+
+
+    @GetMapping(ImageApi.getByName)
+    public ResponseEntity<Resource> getImage(@PathVariable String folderName,@PathVariable String fileName) throws IOException {
+        File file = this.fileStorageService.findByName(fileName, folderName);
+        if (!file.exists() || !file.isFile()) {
+            throw new FileNotFoundException("File not found: " + file.getAbsolutePath());
+        }
+
+        InputStreamResource inputStreamResource = new InputStreamResource(new FileInputStream(file));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG);
+        headers.setContentLength(file.length());
+        headers.set("Content-Disposition", "inline; filename=\"" + file.getName() + "\"");
+
+        return new ResponseEntity<Resource>(inputStreamResource, headers, HttpStatus.OK);
     }
 
-    @PutMapping(ImageApi.update)
-    public ResponseEntity<Image> updateImage(@PathVariable Long id, @RequestParam("file") MultipartFile file) throws IOException {
-        Image image = new Image();
-        image.setName(file.getOriginalFilename());
-        image.setContent(file.getBytes());
-        image = imageService.update(id, image);
-        String imageUrl = imageService.getImageUrl(image.getId());
-        image.setName(imageUrl);
-        return ResponseEntity.ok(imageService.update(image.getId(), image));
-    }
 
-    @GetMapping(ImageApi.getById)
-    public ResponseEntity<Resource> getImage(@PathVariable Long id) {
-        Image image = imageService.findById(id);
-        ByteArrayResource resource = new ByteArrayResource(image.getContent());
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + image.getName() + "\"")
-                .body(resource);
-    }
 }
 

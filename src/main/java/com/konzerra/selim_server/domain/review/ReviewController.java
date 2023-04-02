@@ -1,5 +1,6 @@
 package com.konzerra.selim_server.domain.review;
 
+import com.konzerra.selim_server.domain.file_storage.FileStorageService;
 import com.konzerra.selim_server.domain.review.dto.ReviewResponseDto;
 import com.konzerra.selim_server.domain.review.dto.ReviewSaveDto;
 import com.konzerra.selim_server.domain.review.dto.ReviewUpdateDto;
@@ -8,16 +9,19 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 @RestController
 public class ReviewController {
     private final ReviewService reviewService;
+    private final FileStorageService fileStorageService;
 
     @Autowired
-    public ReviewController(ReviewService reviewService) {
+    public ReviewController(ReviewService reviewService, FileStorageService fileStorageService) {
         this.reviewService = reviewService;
+        this.fileStorageService = fileStorageService;
     }
 
     @GetMapping(ReviewApi.getAll)
@@ -25,9 +29,10 @@ public class ReviewController {
         return reviewService.getAllReviews();
     }
 
-    @PostMapping(ReviewApi.save)
-    public ResponseEntity<ReviewResponseDto> saveGate(@RequestBody ReviewSaveDto reviewSaveDto) {
+    @PostMapping(value = ReviewApi.save,consumes = "multipart/form-data")
+    public ResponseEntity<ReviewResponseDto> saveGate(@RequestPart("file") MultipartFile file, @RequestPart("reviewSaveDto") ReviewSaveDto reviewSaveDto) {
         reviewService.saveReview(reviewSaveDto);
+        fileStorageService.save(file,"review");
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

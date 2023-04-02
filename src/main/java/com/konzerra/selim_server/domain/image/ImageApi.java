@@ -8,6 +8,6 @@ public class ImageApi {
     public static final String save = protectedPath;
 
     public static final String update = protectedPath;
-    public static final String getById = publicPath+"/{id}";
+    public static final String getByName = publicPath+"/{folderName}/{fileName}";
 
 }
