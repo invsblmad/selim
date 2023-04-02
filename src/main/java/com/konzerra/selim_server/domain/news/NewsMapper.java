@@ -8,8 +8,8 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface NewsMapper {
 
-    NewsResponse newsEntityToDto(News news);
-    NewsDetailsResponse newsEntityToDetailsDto(News news);
-    News newsDtoToEntity(NewsRequest newsRequest);
+    NewsResponse entityToDto(News news);
+    NewsDetailsResponse entityToDetailsDto(News news);
+    News dtoToEntity(NewsRequest newsRequest);
 
 }

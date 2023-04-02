@@ -1,0 +1,31 @@
+name: megalab server
+
+on:
+  push:
+    branches: [ "test" ]
+  pull_request:
+    branches: [ "test" ]
+
+jobs:
+  build:
+
+    runs-on: self-hosted
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'adopt'
+        cache: maven
+
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
+    - name: Stop PM2
+      run: pm2 stop selim
+    - name: Start PM2
+      run: pm2 start /home/team5/actions-runner/selim-start.json --name selim --env selim
+
+
+    

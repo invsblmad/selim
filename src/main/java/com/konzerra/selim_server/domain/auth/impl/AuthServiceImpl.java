@@ -61,7 +61,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     private User saveUser(RegistrationDto registrationDto) {
-        User user = userMapper.reegistrationDtoToUser(registrationDto);
+        User user = userMapper.dtoToUser(registrationDto);
         encodePassword(user);
         return usersRepository.save(user);
     }

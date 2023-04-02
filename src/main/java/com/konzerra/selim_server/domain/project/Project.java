@@ -18,7 +18,7 @@ public class Project {
 
     private String image;
 
-    @Column(name = "published_date")
+    @Column(name = "published_date", columnDefinition = "TIMESTAMP(0) WITHOUT TIME ZONE")
     private LocalDateTime publishedDate;
 
     public Project(String image, LocalDateTime publishedDate) {

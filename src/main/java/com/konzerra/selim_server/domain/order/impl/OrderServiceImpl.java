@@ -19,14 +19,14 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderResponse saveOrder(OrderRequest orderRequest) {
-        Order order = orderMapper.orderDtoToEntity(orderRequest);
+        Order order = orderMapper.dtoToEntity(orderRequest);
         Order savedOrder = orderRepository.save(order);
-        return orderMapper.orderEntityToDto(savedOrder);
+        return orderMapper.entityToDto(savedOrder);
     }
 
     @Override
     public Page<OrderResponse> getAllOrders(Pageable pageable) {
         Page<Order> orders = orderRepository.findAll(pageable);
-        return orders.map(orderMapper::orderEntityToDto);
+        return orders.map(orderMapper::entityToDto);
     }
 }
