@@ -47,12 +47,16 @@ public class FileStorageServiceImpl implements FileStorageService {
         }
     }
 
+    /*
+    returns file name
+     */
     @Override
     public String save(MultipartFile multipartFile, String folder) {
-        String path = getFullPathOf(folder) + "/" + getUniqueFileName(multipartFile);
+        String fileName = getUniqueFileName(multipartFile);
+        String path = getFullPathOf(folder) + "/" + fileName;
         try {
             multipartFile.transferTo(new File(path));
-            return path;
+            return fileName;
         } catch (IOException e) {
             throw new FileStorageException(e.getMessage());
         }

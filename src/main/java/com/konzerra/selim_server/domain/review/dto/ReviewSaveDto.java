@@ -12,7 +12,6 @@ import lombok.Setter;
 public class ReviewSaveDto {
     private String firstName;
     private String lastName;
-    private String customerImage;
     private String reviewText;
     private Integer gateCategoryId;
 }

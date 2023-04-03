@@ -1,5 +1,6 @@
 package com.konzerra.selim_server.domain.gate.impl;
 
+import com.konzerra.selim_server.domain.file_storage.FileStorageService;
 import com.konzerra.selim_server.exception.NotFoundException;
 import com.konzerra.selim_server.domain.gate.Gate;
 import com.konzerra.selim_server.domain.gate.GateMapper;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -23,12 +25,15 @@ import java.util.List;
 public class GateServiceImpl implements GateService {
 
     private final GateRepository gateRepository;
+
+    private final FileStorageService fileStorageService;
     private final GateCategoryRepository gateCategoryRepository;
     private final GateMapper mapper;
 
     @Autowired
-    public GateServiceImpl(GateRepository gateRepository, GateCategoryRepository gateCategoryRepository, GateMapper mapper) {
+    public GateServiceImpl(GateRepository gateRepository, FileStorageService fileStorageService, GateCategoryRepository gateCategoryRepository, GateMapper mapper) {
         this.gateRepository = gateRepository;
+        this.fileStorageService = fileStorageService;
         this.gateCategoryRepository = gateCategoryRepository;
         this.mapper = mapper;
     }
@@ -40,8 +45,9 @@ public class GateServiceImpl implements GateService {
     }
 
     @Override
-    public GateResponseDto saveGate(GateSaveDto gateSaveDto) {
+    public GateResponseDto saveGate(GateSaveDto gateSaveDto, MultipartFile image) {
         Gate gate = mapper.toEntity(gateSaveDto);
+        gate.setImage(fileStorageService.save(image, "gate"));
         gate.setCategory(gateCategoryRepository.findById(gateSaveDto.getCategoryId()).orElseThrow(
                 () -> new NotFoundException(
                         "GateCategory not found with id: "+gateSaveDto.getCategoryId()

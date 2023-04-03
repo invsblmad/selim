@@ -5,12 +5,13 @@ import com.konzerra.selim_server.domain.gate.dto.GateSaveDto;
 import com.konzerra.selim_server.domain.gate.dto.GateUpdateDto;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 public interface GateService {
     List<GateResponseDto> getAllGates();
-    GateResponseDto saveGate(GateSaveDto gateSaveDto);
+    GateResponseDto saveGate(GateSaveDto gateSaveDto, MultipartFile image);
     GateResponseDto updateGate(GateUpdateDto gateUpdateDto);
     void deleteGate(Long id);
     List<GateResponseDto> getGatesByCategory(Long categoryId);
