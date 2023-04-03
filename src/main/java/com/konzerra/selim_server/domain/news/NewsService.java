@@ -15,11 +15,10 @@ public interface NewsService {
     NewsDetailsResponse getById(int id);
     List<NewsResponse> getSimilarById(int id);
 
-    NewsDetailsResponse save(NewsRequest newsRequest);
-    NewsDetailsResponse updateById(int id, NewsRequest newsRequest);
-
-    NewsDetailsResponse updateImagesById(int id, Optional<MultipartFile> coverImage,
-                                         Optional<MultipartFile> contentImage);
+    NewsDetailsResponse save(NewsRequest newsRequest, MultipartFile coverImage,
+                             Optional<MultipartFile> contentImage);
+    NewsDetailsResponse updateById(int id, NewsRequest newsRequest, MultipartFile coverImage,
+                                   Optional<MultipartFile> contentImage);
 
     void deleteById(int id);
 }
