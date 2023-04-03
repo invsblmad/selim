@@ -53,66 +53,57 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public NewsDetailsResponse save(NewsRequest newsRequest) {
+    public NewsDetailsResponse save(NewsRequest newsRequest, MultipartFile coverImage,
+                                    Optional<MultipartFile> contentImage) {
+
         News news = newsMapper.dtoToEntity(newsRequest);
         news.setPublishedDate(LocalDateTime.now());
+
+        saveCoverImage(news, coverImage);
+        contentImage.ifPresent(image -> saveContentImage(news, image));
 
         News savedNews = newsRepository.save(news);
         return newsMapper.entityToDetailsDto(savedNews);
     }
 
-    @Override
-    public NewsDetailsResponse updateById(int id, NewsRequest newsRequest) {
-        News news = findNewsById(id);
+    private void saveCoverImage(News news, MultipartFile coverImage) {
+        String path = fileStorageService.save(coverImage, "news");
+        news.setCoverImage(path);
+    }
 
-        news.setTitle(newsRequest.getTitle());
-        news.setText(newsRequest.getText());
+    private void saveContentImage(News news, MultipartFile contentImage) {
+        String path = fileStorageService.save(contentImage, "news");
+        news.setContentImage(path);
+    }
+
+    @Override
+    public NewsDetailsResponse updateById(int id, NewsRequest newsRequest, MultipartFile coverImage,
+                                          Optional<MultipartFile> contentImage) {
+        News news = findNewsById(id);
+        news.update(newsRequest.getTitle(), newsRequest.getText());
+
+        updateImage(coverImage, news.getCoverImage());
+        contentImage.ifPresent(image -> updateImage(image, news.getContentImage()));
 
         News updatedNews = newsRepository.save(news);
         return newsMapper.entityToDetailsDto(updatedNews);
     }
 
-    @Override
-    public NewsDetailsResponse updateImagesById(int id, Optional<MultipartFile> coverImage,
-                                                Optional<MultipartFile> contentImage) {
-        News news = findNewsById(id);
-
-        coverImage.ifPresent(image -> updateCoverImage(news, image));
-        contentImage.ifPresent(image -> updateContentImage(news, image));
-
-        News updatedNews = newsRepository.save(news);
-        return newsMapper.entityToDetailsDto(updatedNews);
-    }
-
-    private void updateCoverImage(News news, MultipartFile coverImage) {
-        if (news.getCoverImage() == null) {
-            String path = fileStorageService.save(coverImage, "news");
-            news.setCoverImage(path);
-        } else {
-            fileStorageService.update(coverImage, news.getCoverImage());
-        }
-    }
-
-    private void updateContentImage(News news, MultipartFile contentImage) {
-        if (news.getContentImage() == null) {
-            String path = fileStorageService.save(contentImage, "news");
-            news.setContentImage(path);
-        } else {
-            fileStorageService.update(contentImage, news.getContentImage());
-        }
+    private void updateImage(MultipartFile image, String path) {
+        fileStorageService.update(image, path);
     }
 
     @Override
     public void deleteById(int id) {
         News news = findNewsById(id);
 
-        deleteIfExists(news.getCoverImage());
-        deleteIfExists(news.getContentImage());
+        deleteImage(news.getCoverImage());
+        if (news.getContentImage() != null) deleteImage(news.getContentImage());
 
         newsRepository.delete(news);
     }
 
-    private void deleteIfExists(String imagePath) {
-        if (imagePath != null) fileStorageService.delete(imagePath);
+    private void deleteImage(String imagePath) {
+        fileStorageService.delete(imagePath);
     }
 }
