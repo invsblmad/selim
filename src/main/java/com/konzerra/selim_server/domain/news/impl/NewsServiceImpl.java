@@ -76,12 +76,12 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public NewsDetailsResponse updateById(int id, NewsRequest newsRequest, MultipartFile coverImage,
+    public NewsDetailsResponse updateById(int id, NewsRequest newsRequest, Optional<MultipartFile> coverImage,
                                           Optional<MultipartFile> contentImage) {
         News news = findNewsById(id);
         news.update(newsRequest.getTitle(), newsRequest.getText());
 
-        updateImage(coverImage, news.getCoverImage());
+        coverImage.ifPresent(image -> updateImage(image, news.getCoverImage()));
         contentImage.ifPresent(image -> updateImage(image, news.getContentImage()));
 
         News updatedNews = newsRepository.save(news);

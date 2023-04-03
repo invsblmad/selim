@@ -36,9 +36,9 @@ public class NewsController {
     }
 
     @PostMapping("/protected/news")
-    public ResponseEntity<NewsDetailsResponse> save(@RequestPart("json") NewsRequest newsRequest,
-                                                    @RequestPart("cover") MultipartFile coverImage,
-                                                    @RequestPart("content") Optional<MultipartFile> contentImage) {
+    public ResponseEntity<NewsDetailsResponse> save(@RequestPart("saveDto") NewsRequest newsRequest,
+                                                    @RequestPart("coverImage") MultipartFile coverImage,
+                                                    @RequestPart("contentImage") Optional<MultipartFile> contentImage) {
         var response = newsService.save(newsRequest, coverImage, contentImage);
         return ResponseEntity
                 .status(HttpStatus.CREATED).body(response);
@@ -46,9 +46,9 @@ public class NewsController {
 
     @PutMapping("/protected/news/{id}")
     public NewsDetailsResponse updateById(@PathVariable int id,
-                                          @RequestPart("json") NewsRequest newsRequest,
-                                          @RequestPart("cover") MultipartFile coverImage,
-                                          @RequestPart("content") Optional<MultipartFile> contentImage
+                                          @RequestPart("updateDto") NewsRequest newsRequest,
+                                          @RequestPart("coverImage") Optional<MultipartFile> coverImage,
+                                          @RequestPart("contentImage") Optional<MultipartFile> contentImage
     ) {
         return newsService.updateById(id, newsRequest, coverImage, contentImage);
     }
