@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -28,8 +29,8 @@ public class GateController {
     }
 
     @PostMapping(GateApi.save)
-    public ResponseEntity<GateResponseDto> saveGate(@RequestBody GateSaveDto gateSaveDto) {
-        gateService.saveGate(gateSaveDto);
+    public ResponseEntity<GateResponseDto> saveGate(@RequestPart("image") MultipartFile image, @RequestPart("saveDto") GateSaveDto gateSaveDto) {
+        gateService.saveGate(gateSaveDto, image);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

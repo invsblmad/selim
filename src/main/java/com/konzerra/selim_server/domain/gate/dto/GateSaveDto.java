@@ -11,7 +11,6 @@ import lombok.Setter;
 @Setter
 public class GateSaveDto {
     private String name;
-    private String image;
     private Long categoryId;
 
 }
