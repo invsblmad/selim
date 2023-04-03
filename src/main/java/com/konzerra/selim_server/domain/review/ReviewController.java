@@ -31,8 +31,7 @@ public class ReviewController {
 
     @PostMapping(value = ReviewApi.save,consumes = "multipart/form-data")
     public ResponseEntity<ReviewResponseDto> saveGate(@RequestPart("file") MultipartFile file, @RequestPart("reviewSaveDto") ReviewSaveDto reviewSaveDto) {
-        reviewService.saveReview(reviewSaveDto);
-        fileStorageService.save(file,"review");
+        reviewService.saveReview(reviewSaveDto, file);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

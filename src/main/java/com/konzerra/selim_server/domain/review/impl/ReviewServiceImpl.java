@@ -1,6 +1,7 @@
 package com.konzerra.selim_server.domain.review.impl;
 
 
+import com.konzerra.selim_server.domain.file_storage.FileStorageService;
 import com.konzerra.selim_server.domain.gate_category.GateCategoryRepository;
 import com.konzerra.selim_server.domain.review.Review;
 import com.konzerra.selim_server.domain.review.ReviewMapper;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -23,13 +25,15 @@ import java.util.List;
 public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewRepository reviewRepository;
+    private final FileStorageService fileStorageService;
 
     private final GateCategoryRepository gateCategoryRepository;
     private final ReviewMapper mapper;
 
     @Autowired
-    public ReviewServiceImpl(ReviewRepository reviewRepository, GateCategoryRepository gateCategoryRepository, ReviewMapper mapper) {
+    public ReviewServiceImpl(ReviewRepository reviewRepository, FileStorageService fileStorageService, GateCategoryRepository gateCategoryRepository, ReviewMapper mapper) {
         this.reviewRepository = reviewRepository;
+        this.fileStorageService = fileStorageService;
         this.gateCategoryRepository = gateCategoryRepository;
         this.mapper = mapper;
     }
@@ -41,8 +45,10 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public ReviewResponseDto saveReview(ReviewSaveDto reviewSaveDto) {
+    public ReviewResponseDto saveReview(ReviewSaveDto reviewSaveDto, MultipartFile image) {
+        String filename = fileStorageService.save(image,"review");
         Review review = mapper.toEntity(reviewSaveDto);
+        review.setCustomerImage(filename);
         Review savedReview = reviewRepository.save(review);
         return mapper.toDto(savedReview);
     }
