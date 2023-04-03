@@ -16,7 +16,7 @@ public interface NewsService {
     List<NewsResponse> getSimilarById(int id);
     NewsDetailsResponse save(NewsRequest newsRequest, MultipartFile coverImage,
                              Optional<MultipartFile> contentImage);
-    NewsDetailsResponse updateById(int id, NewsRequest newsRequest, MultipartFile coverImage,
+    NewsDetailsResponse updateById(int id, NewsRequest newsRequest, Optional<MultipartFile> coverImage,
                                    Optional<MultipartFile> contentImage);
     void deleteById(int id);
 }
