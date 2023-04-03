@@ -9,8 +9,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,6 +31,9 @@ public class ImageController {
 
 
 
+    /*
+    Get image by file name and folder name
+     */
     @GetMapping(ImageApi.getByName)
     public ResponseEntity<Resource> getImage(@PathVariable String folderName,@PathVariable String fileName) throws IOException {
         File file = this.fileStorageService.findByName(fileName, folderName);
@@ -44,7 +48,7 @@ public class ImageController {
         headers.setContentLength(file.length());
         headers.set("Content-Disposition", "inline; filename=\"" + file.getName() + "\"");
 
-        return new ResponseEntity<Resource>(inputStreamResource, headers, HttpStatus.OK);
+        return new ResponseEntity<>(inputStreamResource, headers, HttpStatus.OK);
     }
 
 
