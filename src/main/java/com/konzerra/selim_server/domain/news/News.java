@@ -24,4 +24,8 @@ public class News {
     @Column(name = "published_date", columnDefinition = "TIMESTAMP(0) WITHOUT TIME ZONE")
     private LocalDateTime publishedDate;
 
+    public void update(String title, String text) {
+        this.title = title;
+        this.text = text;
+    }
 }
