@@ -36,7 +36,7 @@ public class TokenServiceImpl implements TokenService {
         return JwtClaimsSet.builder()
                 .issuer("self")
                 .issuedAt(now)
-                .expiresAt(now.plus(1, ChronoUnit.HOURS))
+                .expiresAt(now.plus(24, ChronoUnit.HOURS))
                 .subject(userDetails.getUsername())
                 .id(String.valueOf(userDetails.user().getId()))
                 .claim("scope", getScope(userDetails))
