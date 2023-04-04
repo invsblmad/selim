@@ -15,74 +15,26 @@ import java.util.UUID;
 public class FileStorageServiceImpl implements FileStorageService {
     @Value("${file.storage.path}")
     private String rootPath;
-    private String projectsPath;
-    private String newsPath;
-
-    private String gateCategory;
-    private String gate;
-    private String review;
 
     @PostConstruct
     private void init() {
-        this.projectsPath = rootPath + "/projects";
-        this.newsPath = rootPath + "/news";
-        this.gateCategory = rootPath + "/common";
-        this.gate = rootPath + "/gate";
-        this.review = rootPath + "/review";
-
-        checkIfPathExists(rootPath);
-        checkIfPathExists(projectsPath);
-        checkIfPathExists(newsPath);
-        checkIfPathExists(gateCategory);
-        checkIfPathExists(gate);
-        checkIfPathExists(review);
-
-    }
-
-    private void checkIfPathExists(String path) {
-        File file = new File(path);
+        File file = new File(rootPath);
         if (!file.exists()) {
-            System.out.println(path);
+            System.out.println(rootPath);
             file.mkdirs();
         }
     }
 
-    /*
-    returns file name
-     */
     @Override
-    public String save(MultipartFile multipartFile, String folder) {
-        String fileName = getUniqueFileName(multipartFile);
-        String path = getFullPathOf(folder) + "/" + fileName;
+    public String save(MultipartFile file) {
+        String fileName = getUniqueFileName(file);
+        String path = getFilePath(fileName);
         try {
-            multipartFile.transferTo(new File(path));
+            file.transferTo(new File(path));
             return fileName;
         } catch (IOException e) {
             throw new FileStorageException(e.getMessage());
         }
-    }
-
-    @Override
-    public File findByName(String fileName, String folder) {
-        File existingFile = null;
-        try {
-            existingFile = new File(rootPath+"/"+folder+"/"+fileName);
-            System.out.println("cathching file");
-        } catch (Exception e) {
-            throw new FileStorageException(e.getMessage());
-        }
-        return existingFile;
-    }
-
-    private String getFullPathOf(String folder) {
-        return switch (folder) {
-            case "news" -> newsPath;
-            case "projects" -> projectsPath;
-            case "gateCategory" -> gateCategory;
-            case "gate" -> gate;
-            case "review" -> review;
-            default -> null;
-        };
     }
 
     private String getUniqueFileName(MultipartFile multipartFile) {
@@ -96,25 +48,33 @@ public class FileStorageServiceImpl implements FileStorageService {
         return fileName.substring(fileName.lastIndexOf("."));
     }
 
+    private String getFilePath(String fileName) {
+        return rootPath + "/" + fileName;
+    }
+
     @Override
-    public void update(
-            MultipartFile multipartFile,
-            String folderName,
-            String fileName
-    ) {
-        String path = rootPath + "/" + folderName +"/"+fileName;
-        File existingFile = new File(path);
+    public File findByName(String fileName) {
         try {
-            multipartFile.transferTo(existingFile);
+            String path = getFilePath(fileName);
+            return new File(path);
+        } catch (Exception e) {
+            throw new FileStorageException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void update(MultipartFile newFile, String fileName) {
+        File existingFile = findByName(fileName);
+        try {
+            newFile.transferTo(existingFile);
         } catch (IOException e) {
             throw new FileStorageException(e.getMessage());
         }
     }
 
     @Override
-    public void delete(String folderName, String fileName) {
-        String path = rootPath + "/" + folderName +"/"+fileName;
-        File file = new File(path);
+    public void delete(String fileName) {
+        File file = findByName(fileName);
         file.delete();
     }
 
