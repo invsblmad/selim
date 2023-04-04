@@ -97,8 +97,13 @@ public class FileStorageServiceImpl implements FileStorageService {
     }
 
     @Override
-    public void update(MultipartFile multipartFile, String fileName) {
-        File existingFile = new File(fileName);
+    public void update(
+            MultipartFile multipartFile,
+            String folderName,
+            String fileName
+    ) {
+        String path = rootPath + "/" + folderName +"/"+fileName;
+        File existingFile = new File(path);
         try {
             multipartFile.transferTo(existingFile);
         } catch (IOException e) {
@@ -107,7 +112,8 @@ public class FileStorageServiceImpl implements FileStorageService {
     }
 
     @Override
-    public void delete(String path) {
+    public void delete(String folderName, String fileName) {
+        String path = rootPath + "/" + folderName +"/"+fileName;
         File file = new File(path);
         file.delete();
     }

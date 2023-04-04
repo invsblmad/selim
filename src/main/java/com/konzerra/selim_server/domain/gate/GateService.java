@@ -12,7 +12,7 @@ import java.util.List;
 public interface GateService {
     List<GateResponseDto> getAllGates();
     GateResponseDto saveGate(GateSaveDto gateSaveDto, MultipartFile image);
-    GateResponseDto updateGate(GateUpdateDto gateUpdateDto);
+    GateResponseDto updateGate(MultipartFile image, GateUpdateDto gateUpdateDto);
     void deleteGate(Long id);
     List<GateResponseDto> getGatesByCategory(Long categoryId);
     Page<GateResponseDto> getPaginatedGates(Long categoryId, int pageNumber, int pageSize, String sortDirection, String sortField);

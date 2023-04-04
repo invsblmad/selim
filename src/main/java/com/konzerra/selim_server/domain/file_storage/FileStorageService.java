@@ -8,6 +8,6 @@ public interface FileStorageService {
     String save(MultipartFile multipartFile, String folder);
 
     File findByName(String fileName, String folderName);
-    void update(MultipartFile multipartFile, String fileName);
-    void delete(String path);
+    void update(MultipartFile multipartFile, String folderName, String fileName);
+    void delete(String folderName, String fileName);
 }

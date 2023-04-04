@@ -61,10 +61,14 @@ public class GateServiceImpl implements GateService {
 
 
     @Override
-    public GateResponseDto updateGate(GateUpdateDto gateUpdateDto) {
+    public GateResponseDto updateGate(MultipartFile image, GateUpdateDto gateUpdateDto) {
         Gate gate = gateRepository.findById(gateUpdateDto.getId()).orElseThrow(() -> new NotFoundException("Gate not found with id: "+ gateUpdateDto.getId()));
         gate.setName(gateUpdateDto.getName());
-        gate.setImage(gateUpdateDto.getImage());
+        if(image != null){
+            fileStorageService.delete("TODO", "");
+            gate.setImage(fileStorageService.save(image, "gate"));
+        }
+
         gate.setCategory(gateCategoryRepository.findById(gateUpdateDto.getCategoryId()).orElseThrow(() -> new NotFoundException("GateCategory not found with id: "+ gateUpdateDto.getId())));
         Gate updatedGate = gateRepository.save(gate);
         return mapper.toDto(updatedGate);

@@ -89,7 +89,7 @@ public class NewsServiceImpl implements NewsService {
     }
 
     private void updateImage(MultipartFile image, String path) {
-        fileStorageService.update(image, path);
+        fileStorageService.update(image, "TODO", path);
     }
 
     @Override
@@ -103,6 +103,6 @@ public class NewsServiceImpl implements NewsService {
     }
 
     private void deleteImage(String imagePath) {
-        fileStorageService.delete(imagePath);
+        fileStorageService.delete(imagePath,"TODO");
     }
 }
