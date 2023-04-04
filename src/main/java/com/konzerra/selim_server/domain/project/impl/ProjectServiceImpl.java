@@ -41,24 +41,25 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public ProjectResponse save(MultipartFile multipartFile) {
-        String imagePath = fileStorageService.save(multipartFile, "projects");
-        Project savedProject = projectRepository.save(
-                new Project(imagePath, LocalDateTime.now()));
+    public ProjectResponse save(MultipartFile image) {
+        String fileName = fileStorageService.save(image);
+        Project project = new Project(fileName, LocalDateTime.now());
+
+        Project savedProject = projectRepository.save(project);
         return projectMapper.entityToDto(savedProject);
     }
 
     @Override
-    public ProjectResponse updateById(int id, MultipartFile multipartFile) {
+    public ProjectResponse updateById(int id, MultipartFile image) {
         Project project = findProjectById(id);
-        fileStorageService.update(multipartFile, "projects",project.getImage());
+        fileStorageService.update(image, project.getImage());
         return projectMapper.entityToDto(project);
     }
 
     @Override
     public void deleteById(int id) {
         Project project = findProjectById(id);
-        fileStorageService.delete("projects", project.getImage());
+        fileStorageService.delete(project.getImage());
         projectRepository.delete(project);
     }
 }

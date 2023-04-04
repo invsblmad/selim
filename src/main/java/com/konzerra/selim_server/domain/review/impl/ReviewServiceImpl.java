@@ -46,7 +46,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public ReviewResponseDto saveReview(ReviewSaveDto reviewSaveDto, MultipartFile image) {
-        String filename = fileStorageService.save(image,"review");
+        String filename = fileStorageService.save(image);
         Review review = mapper.toEntity(reviewSaveDto);
         review.setCustomerImage(filename);
         Review savedReview = reviewRepository.save(review);

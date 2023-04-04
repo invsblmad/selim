@@ -66,13 +66,13 @@ public class NewsServiceImpl implements NewsService {
     }
 
     private void saveCoverImage(News news, MultipartFile coverImage) {
-        String path = fileStorageService.save(coverImage, "news");
-        news.setCoverImage(path);
+        String fileName = fileStorageService.save(coverImage);
+        news.setCoverImage(fileName);
     }
 
     private void saveContentImage(News news, MultipartFile contentImage) {
-        String path = fileStorageService.save(contentImage, "news");
-        news.setContentImage(path);
+        String fileName = fileStorageService.save(contentImage);
+        news.setContentImage(fileName);
     }
 
     @Override
@@ -88,8 +88,8 @@ public class NewsServiceImpl implements NewsService {
         return newsMapper.entityToDetailsDto(updatedNews);
     }
 
-    private void updateImage(MultipartFile image, String path) {
-        fileStorageService.update(image, "TODO", path);
+    private void updateImage(MultipartFile image, String fileName) {
+        fileStorageService.update(image, fileName);
     }
 
     @Override
@@ -102,7 +102,7 @@ public class NewsServiceImpl implements NewsService {
         newsRepository.delete(news);
     }
 
-    private void deleteImage(String imagePath) {
-        fileStorageService.delete(imagePath,"TODO");
+    private void deleteImage(String fileName) {
+        fileStorageService.delete(fileName);
     }
 }
