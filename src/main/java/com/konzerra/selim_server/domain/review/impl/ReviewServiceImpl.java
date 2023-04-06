@@ -54,7 +54,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public ReviewResponseDto updateReview(ReviewUpdateDto reviewUpdateDto) {
+    public ReviewResponseDto updateReview(MultipartFile image, ReviewUpdateDto reviewUpdateDto) {
         Review review = reviewRepository.findById(reviewUpdateDto.getId())
                 .orElseThrow(() -> new NotFoundException("Review not found with id: "+ reviewUpdateDto.getId()));
         review.setFirstName(reviewUpdateDto.getFirstName());

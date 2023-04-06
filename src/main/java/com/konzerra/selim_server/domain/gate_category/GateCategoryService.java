@@ -5,14 +5,15 @@ import com.konzerra.selim_server.domain.gate_category.dto.GateCategorySaveDto;
 import com.konzerra.selim_server.domain.gate_category.dto.GateCategoryUpdateDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 public interface GateCategoryService {
 
-    GateCategoryResponseDto save(GateCategorySaveDto dto);
+    GateCategoryResponseDto save(MultipartFile image, GateCategorySaveDto dto);
 
-    GateCategoryResponseDto update(GateCategoryUpdateDto dto);
+    GateCategoryResponseDto update(MultipartFile image, GateCategoryUpdateDto dto);
 
     List<GateCategoryResponseDto> findAll();
 

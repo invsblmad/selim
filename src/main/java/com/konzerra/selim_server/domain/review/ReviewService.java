@@ -11,7 +11,7 @@ import java.util.List;
 public interface ReviewService {
     List<ReviewResponseDto> getAllReviews();
     ReviewResponseDto saveReview(ReviewSaveDto reviewSaveDto, MultipartFile image);
-    ReviewResponseDto updateReview(ReviewUpdateDto reviewUpdateDto);
+    ReviewResponseDto updateReview(MultipartFile image, ReviewUpdateDto reviewUpdateDto);
     void deleteReview(Long id);
     List<ReviewResponseDto> getReviewsByGateCategory(Long categoryId);
     Page<ReviewResponseDto> getPaginatedReviews(Long categoryId, int pageNumber, int pageSize, String sortDirection, String sortField);

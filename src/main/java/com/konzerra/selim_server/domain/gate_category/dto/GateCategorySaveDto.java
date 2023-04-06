@@ -16,8 +16,6 @@ public class GateCategorySaveDto {
 
     private String name;
 
-    private String image;
-
     private String description;
 
     private List<GateCategoryAdvantageSaveDto> advantages;

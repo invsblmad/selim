@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
 import java.util.List;
@@ -28,15 +29,19 @@ public class GateCategoryController {
 
     @PostMapping(GateCategoryApi.save)
     public ResponseEntity<GateCategoryResponseDto> save(
-            @RequestBody GateCategorySaveDto dto
+            @RequestPart("image") MultipartFile image,
+            @RequestPart("saveDto") GateCategorySaveDto dto
     ) {
-        gateCategoryService.save(dto);
+        gateCategoryService.save(image, dto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping(GateCategoryApi.update)
-    public ResponseEntity<GateCategoryResponseDto> update(@RequestBody GateCategoryUpdateDto dto) {
-        gateCategoryService.update(dto);
+    public ResponseEntity<GateCategoryResponseDto> update(
+            @RequestPart("image") MultipartFile image,
+            @RequestPart("saveDto") GateCategoryUpdateDto dto
+    ) {
+        gateCategoryService.update(image,dto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

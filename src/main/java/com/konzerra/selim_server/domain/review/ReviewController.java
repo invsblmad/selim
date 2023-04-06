@@ -30,14 +30,17 @@ public class ReviewController {
     }
 
     @PostMapping(value = ReviewApi.save,consumes = "multipart/form-data")
-    public ResponseEntity<ReviewResponseDto> saveGate(@RequestPart("file") MultipartFile file, @RequestPart("reviewSaveDto") ReviewSaveDto reviewSaveDto) {
-        reviewService.saveReview(reviewSaveDto, file);
+    public ResponseEntity<ReviewResponseDto> saveGate(@RequestPart("image") MultipartFile image, @RequestPart("saveDto") ReviewSaveDto reviewSaveDto) {
+        reviewService.saveReview(reviewSaveDto, image);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping(ReviewApi.update)
-    public ReviewResponseDto updateGate(@RequestBody ReviewUpdateDto reviewUpdateDto) {
-        return reviewService.updateReview(reviewUpdateDto);
+    public ReviewResponseDto updateGate(
+            @RequestPart("image") MultipartFile image,
+            @RequestPart(name = "saveDto", required = false) ReviewUpdateDto reviewUpdateDto
+    ) {
+        return reviewService.updateReview(image, reviewUpdateDto);
     }
 
     @DeleteMapping(ReviewApi.deleteById)

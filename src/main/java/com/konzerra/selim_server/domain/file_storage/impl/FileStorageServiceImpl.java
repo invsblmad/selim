@@ -26,7 +26,7 @@ public class FileStorageServiceImpl implements FileStorageService {
     private void init() {
         this.projectsPath = rootPath + "/projects";
         this.newsPath = rootPath + "/news";
-        this.gateCategory = rootPath + "/common";
+        this.gateCategory = rootPath + "/gate_category";
         this.gate = rootPath + "/gate";
         this.review = rootPath + "/review";
 
@@ -78,7 +78,7 @@ public class FileStorageServiceImpl implements FileStorageService {
         return switch (folder) {
             case "news" -> newsPath;
             case "projects" -> projectsPath;
-            case "gateCategory" -> gateCategory;
+            case "gate_category" -> gateCategory;
             case "gate" -> gate;
             case "review" -> review;
             default -> null;
