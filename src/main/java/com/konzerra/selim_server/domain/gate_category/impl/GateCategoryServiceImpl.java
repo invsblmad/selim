@@ -41,11 +41,13 @@ public class GateCategoryServiceImpl implements GateCategoryService {
     @Override
     public GateCategoryResponseDto save(MultipartFile image, GateCategorySaveDto dto) {
         GateCategory entity = mapper.toEntity(dto);
+        System.out.println(dto.getAdvantages().get(0));
         entity.setImage(fileStorageService.save(image));
         entity.setAdvantages(dto.getAdvantages()
                 .stream()
                 .map(advantageMapper::toEntity)
                 .collect(Collectors.toList()));
+        System.out.println(entity.getAdvantages());
         entity = repository.save(entity);
         return mapper.toDto(entity);
     }

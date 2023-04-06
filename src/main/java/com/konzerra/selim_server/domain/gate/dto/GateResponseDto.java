@@ -14,7 +14,7 @@ public class GateResponseDto {
     private Long id;
     private String name;
     private String image;
-    private GateCategoryResponseDto category;
+
 
 
 }

@@ -13,18 +13,9 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class GateCategoryResponseDto {
+public class GateCategorySimpleResponseDto {
 
     private Long id;
 
     private String name;
-
-    private String image;
-
-    private String description;
-
-    private List<GateCategoryAdvantageResponseDto> advantages;
-
-    private List<GateResponseDto> gates;
-
 }

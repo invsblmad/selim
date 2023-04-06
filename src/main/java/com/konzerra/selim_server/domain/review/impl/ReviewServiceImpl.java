@@ -49,6 +49,9 @@ public class ReviewServiceImpl implements ReviewService {
         String filename = fileStorageService.save(image);
         Review review = mapper.toEntity(reviewSaveDto);
         review.setCustomerImage(filename);
+        review.setGateCategory(gateCategoryRepository.findById(reviewSaveDto.getGateCategoryId())
+                .orElseThrow(() -> new NotFoundException("GateCategory not found with id: "+ reviewSaveDto.getGateCategoryId())));
+
         Review savedReview = reviewRepository.save(review);
         return mapper.toDto(savedReview);
     }

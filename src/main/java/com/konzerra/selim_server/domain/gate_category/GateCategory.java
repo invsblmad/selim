@@ -31,6 +31,6 @@ public class GateCategory {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<GateCategoryAdvantage> advantages;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category",fetch = FetchType.LAZY)
     private List<Gate> gates;
 }

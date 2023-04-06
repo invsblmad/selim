@@ -2,6 +2,7 @@ package com.konzerra.selim_server.domain.gate_category;
 
 import com.konzerra.selim_server.domain.gate_category.dto.GateCategoryResponseDto;
 import com.konzerra.selim_server.domain.gate_category.dto.GateCategorySaveDto;
+import com.konzerra.selim_server.domain.gate_category.dto.GateCategorySimpleResponseDto;
 import com.konzerra.selim_server.domain.gate_category.dto.GateCategoryUpdateDto;
 import org.mapstruct.Mapper;
 
@@ -15,6 +16,8 @@ public interface GateCategoryMapper {
     GateCategory toEntity(GateCategoryUpdateDto dto);
 
     GateCategoryResponseDto toDto(GateCategory entity);
+
+    GateCategorySimpleResponseDto toSimpleDto(GateCategory entity);
 
     List<GateCategoryResponseDto> toDtoList(List<GateCategory> entities);
 }

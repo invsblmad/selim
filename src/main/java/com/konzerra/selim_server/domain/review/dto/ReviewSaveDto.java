@@ -13,5 +13,5 @@ public class ReviewSaveDto {
     private String firstName;
     private String lastName;
     private String reviewText;
-    private Integer gateCategoryId;
+    private Long gateCategoryId;
 }
