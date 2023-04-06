@@ -1,5 +1,6 @@
-package com.konzerra.selim_server.domain.order;
+package com.konzerra.selim_server.domain.order.repository;
 
+import com.konzerra.selim_server.domain.order.model.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

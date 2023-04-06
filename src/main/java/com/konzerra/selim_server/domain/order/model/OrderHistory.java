@@ -1,4 +1,4 @@
-package com.konzerra.selim_server.domain.order;
+package com.konzerra.selim_server.domain.order.model;
 
 import com.konzerra.selim_server.domain.user.User;
 import jakarta.persistence.*;
@@ -30,4 +30,10 @@ public class OrderHistory {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    public OrderHistory(OrderStatus status, LocalDateTime recordingDate, Order order, User user) {
+        this.status = status;
+        this.recordingDate = recordingDate;
+        this.order = order;
+        this.user = user;
+    }
 }
