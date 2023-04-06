@@ -41,7 +41,7 @@ public class GateCategoryServiceImpl implements GateCategoryService {
     @Override
     public GateCategoryResponseDto save(MultipartFile image, GateCategorySaveDto dto) {
         GateCategory entity = mapper.toEntity(dto);
-        entity.setImage(fileStorageService.save(image,"gate_category"));
+        entity.setImage(fileStorageService.save(image));
         entity.setAdvantages(dto.getAdvantages()
                 .stream()
                 .map(advantageMapper::toEntity)
@@ -56,7 +56,7 @@ public class GateCategoryServiceImpl implements GateCategoryService {
                 .orElseThrow(() -> new EntityNotFoundException("GateCategory not found with id " + dto.getId()));
         mapper.toEntity(dto);
         if(image != null){
-            fileStorageService.update(image,"gate_category",entity.getImage());
+            fileStorageService.update(image,entity.getImage());
         }
         entity = repository.save(entity);
         return mapper.toDto(entity);
@@ -82,7 +82,7 @@ public class GateCategoryServiceImpl implements GateCategoryService {
 
     public void deleteById(Long id) {
         GateCategory gateCategory = repository.findById(id).orElseThrow(() -> new NotFoundException("Gate Category not found with id: "+ id));
-        fileStorageService.delete("gate_category", gateCategory.getImage());
+        fileStorageService.delete(gateCategory.getImage());
         repository.delete(gateCategory);
     }
 }

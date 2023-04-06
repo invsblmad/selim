@@ -36,8 +36,8 @@ public class GateController {
 
     @PutMapping(GateApi.update)
     public GateResponseDto updateGate(
-            @RequestPart("image") MultipartFile image,
-            @RequestPart(name = "updateDto", required = false) GateUpdateDto gateUpdateDto
+            @RequestPart(name = "image",required = false) MultipartFile image,
+            @RequestPart(name = "updateDto") GateUpdateDto gateUpdateDto
     ) {
         return gateService.updateGate(image, gateUpdateDto);
     }
