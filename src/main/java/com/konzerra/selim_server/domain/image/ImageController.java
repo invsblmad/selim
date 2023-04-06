@@ -29,14 +29,9 @@ public class ImageController {
         this.fileStorageService = fileStorageService;
     }
 
-
-
-    /*
-    Get image by file name and folder name
-     */
     @GetMapping(ImageApi.getByName)
-    public ResponseEntity<Resource> getImage(@PathVariable String folderName,@PathVariable String fileName) throws IOException {
-        File file = this.fileStorageService.findByName(fileName, folderName);
+    public ResponseEntity<Resource> getImageByName(@PathVariable String fileName) throws IOException {
+        File file = this.fileStorageService.findByName(fileName);
         if (!file.exists() || !file.isFile()) {
             throw new FileNotFoundException("File not found: " + file.getAbsolutePath());
         }

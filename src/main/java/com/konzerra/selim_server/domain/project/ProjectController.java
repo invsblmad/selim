@@ -26,15 +26,15 @@ public class ProjectController {
     }
 
     @PostMapping("/protected/projects")
-    public ResponseEntity<ProjectResponse> save(@RequestPart("image") MultipartFile multipartFile) {
-        var response = projectService.save(multipartFile);
+    public ResponseEntity<ProjectResponse> save(@RequestPart("image") MultipartFile image) {
+        var response = projectService.save(image);
         return ResponseEntity
                 .status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/protected/projects/{id}")
-    public ProjectResponse updateById(@PathVariable int id, @RequestPart("image") MultipartFile multipartFile) {
-        return projectService.updateById(id, multipartFile);
+    public ProjectResponse updateById(@PathVariable int id, @RequestPart("image") MultipartFile image) {
+        return projectService.updateById(id, image);
     }
 
     @DeleteMapping("/protected/projects/{id}")

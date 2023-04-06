@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 public interface ProjectService {
     Page<ProjectResponse> getAll(Pageable pageable);
     ProjectResponse getById(int id);
-    ProjectResponse save(MultipartFile multipartFile);
-    ProjectResponse updateById(int id, MultipartFile multipartFile);
+    ProjectResponse save(MultipartFile image);
+    ProjectResponse updateById(int id, MultipartFile image);
     void deleteById(int id);
 }

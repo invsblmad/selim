@@ -5,9 +5,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 
 public interface FileStorageService {
-    String save(MultipartFile multipartFile, String folder);
+    String save(MultipartFile file);
 
-    File findByName(String fileName, String folderName);
-    void update(MultipartFile multipartFile, String folderName, String fileName);
-    void delete(String folderName, String fileName);
+    File findByName(String fileName);
+    void update(MultipartFile newFile, String fileName);
+    void delete(String fileName);
 }

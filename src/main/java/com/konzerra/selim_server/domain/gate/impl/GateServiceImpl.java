@@ -47,7 +47,7 @@ public class GateServiceImpl implements GateService {
     @Override
     public GateResponseDto saveGate(GateSaveDto gateSaveDto, MultipartFile image) {
         Gate gate = mapper.toEntity(gateSaveDto);
-        gate.setImage(fileStorageService.save(image, "gate"));
+        gate.setImage(fileStorageService.save(image));
         gate.setCategory(gateCategoryRepository.findById(gateSaveDto.getCategoryId()).orElseThrow(
                 () -> new NotFoundException(
                         "GateCategory not found with id: "+gateSaveDto.getCategoryId()
@@ -65,7 +65,8 @@ public class GateServiceImpl implements GateService {
         Gate gate = gateRepository.findById(gateUpdateDto.getId()).orElseThrow(() -> new NotFoundException("Gate not found with id: "+ gateUpdateDto.getId()));
         gate.setName(gateUpdateDto.getName());
         if(image != null){
-            fileStorageService.update(image, "gate", gate.getImage());
+            fileStorageService.delete("TODO");
+            gate.setImage(fileStorageService.save(image));
         }
 
         gate.setCategory(gateCategoryRepository.findById(gateUpdateDto.getCategoryId()).orElseThrow(() -> new NotFoundException("GateCategory not found with id: "+ gateUpdateDto.getId())));
@@ -76,7 +77,6 @@ public class GateServiceImpl implements GateService {
     @Override
     public void deleteGate(Long id) {
         Gate gate = gateRepository.findById(id).orElseThrow(() -> new NotFoundException("Gate not found with id: "+ id));
-        fileStorageService.delete("gate",gate.getImage());
         gateRepository.delete(gate);
     }
 
