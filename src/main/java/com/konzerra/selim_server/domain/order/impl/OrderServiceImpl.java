@@ -2,8 +2,11 @@ package com.konzerra.selim_server.domain.order.impl;
 
 import com.konzerra.selim_server.domain.order.*;
 import com.konzerra.selim_server.domain.order.dto.*;
+import com.konzerra.selim_server.domain.order.mapper.OrderHistoryMapper;
+import com.konzerra.selim_server.domain.order.mapper.OrderMapper;
 import com.konzerra.selim_server.domain.order.model.Order;
 import com.konzerra.selim_server.domain.order.model.OrderHistory;
+import com.konzerra.selim_server.domain.order.model.OrderStatus;
 import com.konzerra.selim_server.domain.order.repository.OrderHistoryRepository;
 import com.konzerra.selim_server.domain.order.repository.OrderRepository;
 import com.konzerra.selim_server.domain.security.jwt.TokenService;
@@ -21,12 +24,17 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final OrderHistoryRepository orderHistoryRepository;
     private final OrderMapper orderMapper;
+    private final OrderHistoryMapper orderHistoryMapper;
     private final TokenService tokenService;
 
     @Override
     public OrderResponse save(OrderRequest orderRequest) {
         Order order = orderMapper.dtoToEntity(orderRequest);
         Order savedOrder = orderRepository.save(order);
+
+        OrderHistory history = new OrderHistory(savedOrder);
+        orderHistoryRepository.save(history);
+
         return orderMapper.entityToDto(savedOrder);
     }
 
@@ -37,9 +45,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDetailsResponse getById(int id) {
+    public OrderResponse getById(int id) {
         Order order = findOrderById(id);
-        return orderMapper.entityToDetailsDto(order);
+        return orderMapper.entityToDto(order);
     }
 
     private Order findOrderById(int id) {
@@ -49,20 +57,26 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Page<OrderHistoryResponse> getHistoryById(int id, Pageable pageable) {
+    public Page<OrderHistoryResponse> getOrderHistory(int id, Pageable pageable) {
         Page<OrderHistory> history = orderHistoryRepository.findByOrder_Id(id, pageable);
-        return history.map(orderMapper::historyEntityToDto);
+        return history.map(orderHistoryMapper::entityToDto);
     }
 
     @Override
-    public OrderHistoryResponse saveRecordToHistory(int id, OrderHistoryRequest orderHistoryRequest) {
+    public OrderHistoryResponse saveRecordToHistory(int id, OrderStatusRequest orderStatusRequest) {
         Order order = findOrderById(id);
-        OrderHistory history = new OrderHistory(
-                orderHistoryRequest.getStatus(), LocalDateTime.now(),
-                order, tokenService.getUserFromToken());
+        updateCurrentStatus(order, orderStatusRequest.getStatus());
+
+        OrderHistory history = orderHistoryMapper.dtoToEntity(orderStatusRequest);
+        history.setDetails(order, tokenService.getUserFromToken());
 
         OrderHistory savedHistory = orderHistoryRepository.save(history);
-        return orderMapper.historyEntityToDto(savedHistory);
+        return orderHistoryMapper.entityToDto(savedHistory);
+    }
+
+    private void updateCurrentStatus(Order order, OrderStatus newStatus) {
+        order.setCurrentStatus(newStatus);
+        orderRepository.save(order);
     }
 
 }

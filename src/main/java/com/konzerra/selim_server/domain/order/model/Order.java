@@ -15,13 +15,14 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     @Column(name = "customer_name")
     private String customerName;
     @Column(name = "customer_phone")
     private String customerPhone;
     private String message;
-
+    @Column(name = "current_status")
+    @Enumerated(EnumType.STRING)
+    private OrderStatus currentStatus;
     @OneToMany(mappedBy = "order")
     private List<OrderHistory> history;
 }

@@ -1,7 +1,6 @@
 package com.konzerra.selim_server.domain.order;
 
 import com.konzerra.selim_server.domain.order.dto.*;
-import com.konzerra.selim_server.domain.order.model.OrderHistory;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -27,21 +26,27 @@ public class OrderController {
         return orderService.getAll(pageable);
     }
 
-
     @GetMapping("/protected/orders/{id}")
-    public OrderDetailsResponse getById(@PathVariable int id) {
+    public OrderResponse getById(@PathVariable int id) {
         return orderService.getById(id);
     }
 
     @GetMapping("/protected/orders/{id}/history")
-    public Page<OrderHistoryResponse> getHistoryById(@PathVariable int id, Pageable pageable) {
-        return orderService.getHistoryById(id, pageable);
+    public Page<OrderHistoryResponse> getOrderHistory(@PathVariable int id, Pageable pageable) {
+        return orderService.getOrderHistory(id, pageable);
     }
 
     @PostMapping("/protected/orders/{id}/history")
-    public OrderHistoryResponse saveRecordToHistory(@PathVariable int id,
-                                                    @RequestBody OrderHistoryRequest orderHistoryRequest
+    public ResponseEntity<OrderHistoryResponse> saveRecordToHistory(@PathVariable int id,
+                                                    @RequestBody OrderStatusRequest orderStatusRequest
     ) {
-        return orderService.saveRecordToHistory(id, orderHistoryRequest);
+        var response = orderService.saveRecordToHistory(id, orderStatusRequest);
+        return ResponseEntity
+                .status(HttpStatus.CREATED).body(response);
     }
+
+//    @DeleteMapping("/protected/orders/{id}/history/{id}")
+//    public void deleteRecordInHistoryById(@PathVariable int id, @PathVariable int historyId) {
+//
+//    }
 }

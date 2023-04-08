@@ -21,8 +21,8 @@ public class Project {
     @Column(name = "published_date", columnDefinition = "TIMESTAMP(0) WITHOUT TIME ZONE")
     private LocalDateTime publishedDate;
 
-    public Project(String image, LocalDateTime publishedDate) {
+    public Project(String image) {
         this.image = image;
-        this.publishedDate = publishedDate;
+        this.publishedDate = LocalDateTime.now();
     }
 }

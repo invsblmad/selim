@@ -6,6 +6,8 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class OrderHistoryRequest {
+public class OrderStatusRequest {
     private OrderStatus status;
+    private String name;
+    private LocalDateTime startDate;
 }
