@@ -44,9 +44,4 @@ public class OrderController {
         return ResponseEntity
                 .status(HttpStatus.CREATED).body(response);
     }
-
-//    @DeleteMapping("/protected/orders/{id}/history/{id}")
-//    public void deleteRecordInHistoryById(@PathVariable int id, @PathVariable int historyId) {
-//
-//    }
 }
