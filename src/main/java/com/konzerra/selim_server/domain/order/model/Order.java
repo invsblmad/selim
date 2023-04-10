@@ -1,6 +1,5 @@
 package com.konzerra.selim_server.domain.order.model;
 
-import com.konzerra.selim_server.domain.order.model.OrderHistory;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,6 +22,6 @@ public class Order {
     @Column(name = "current_status")
     @Enumerated(EnumType.STRING)
     private OrderStatus currentStatus;
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderHistory> history;
 }
