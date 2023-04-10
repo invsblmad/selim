@@ -10,4 +10,5 @@ public interface OrderService {
     OrderResponse getById(int id);
     Page<OrderHistoryResponse> getOrderHistory(int id, Pageable pageable);
     OrderHistoryResponse saveRecordToHistory(int id, OrderStatusRequest orderStatusRequest);
+    void deleteById(int id);
 }

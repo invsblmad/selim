@@ -1,7 +1,10 @@
 package com.konzerra.selim_server.domain.order.impl;
 
-import com.konzerra.selim_server.domain.order.*;
-import com.konzerra.selim_server.domain.order.dto.*;
+import com.konzerra.selim_server.domain.order.OrderService;
+import com.konzerra.selim_server.domain.order.dto.OrderHistoryResponse;
+import com.konzerra.selim_server.domain.order.dto.OrderRequest;
+import com.konzerra.selim_server.domain.order.dto.OrderResponse;
+import com.konzerra.selim_server.domain.order.dto.OrderStatusRequest;
 import com.konzerra.selim_server.domain.order.mapper.OrderHistoryMapper;
 import com.konzerra.selim_server.domain.order.mapper.OrderMapper;
 import com.konzerra.selim_server.domain.order.model.Order;
@@ -15,8 +18,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -58,7 +59,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Page<OrderHistoryResponse> getOrderHistory(int id, Pageable pageable) {
-        Page<OrderHistory> history = orderHistoryRepository.findByOrder_Id(id, pageable);
+        Order order = findOrderById(id);
+        Page<OrderHistory> history = orderHistoryRepository.findByOrder(order, pageable);
         return history.map(orderHistoryMapper::entityToDto);
     }
 
@@ -72,6 +74,12 @@ public class OrderServiceImpl implements OrderService {
 
         OrderHistory savedHistory = orderHistoryRepository.save(history);
         return orderHistoryMapper.entityToDto(savedHistory);
+    }
+
+    @Override
+    public void deleteById(int id) {
+        Order order = findOrderById(id);
+        orderRepository.delete(order);
     }
 
     private void updateCurrentStatus(Order order, OrderStatus newStatus) {

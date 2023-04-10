@@ -44,4 +44,9 @@ public class OrderController {
         return ResponseEntity
                 .status(HttpStatus.CREATED).body(response);
     }
+
+    @DeleteMapping("/protected/orders/{id}")
+    public void deleteById(@PathVariable int id) {
+        orderService.deleteById(id);
+    }
 }
