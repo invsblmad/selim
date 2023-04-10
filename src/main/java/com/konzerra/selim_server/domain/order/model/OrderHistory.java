@@ -1,5 +1,6 @@
-package com.konzerra.selim_server.domain.order;
+package com.konzerra.selim_server.domain.order.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.konzerra.selim_server.domain.user.User;
 import jakarta.persistence.*;
 
@@ -23,11 +24,22 @@ public class OrderHistory {
     private LocalDateTime recordingDate;
 
     @ManyToOne
-    @JoinColumn(name = "order_id", nullable = false)
+    @JoinColumn(name = "order_id")
     private Order order;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
+    public OrderHistory(Order order) {
+        this.order = order;
+        this.status = OrderStatus.NEW;
+        this.recordingDate = LocalDateTime.now();
+    }
+
+    public void setDetails(Order order, User user) {
+        this.order = order;
+        this.user = user;
+        this.recordingDate = LocalDateTime.now();
+    }
 }

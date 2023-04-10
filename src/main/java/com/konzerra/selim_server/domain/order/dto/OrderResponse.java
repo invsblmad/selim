@@ -1,5 +1,6 @@
 package com.konzerra.selim_server.domain.order.dto;
 
+import com.konzerra.selim_server.domain.order.model.OrderStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,4 +11,5 @@ public class OrderResponse {
     private String customerName;
     private String customerPhone;
     private String message;
+    private OrderStatus currentStatus;
 }

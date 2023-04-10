@@ -43,7 +43,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public ProjectResponse save(MultipartFile image) {
         String fileName = fileStorageService.save(image);
-        Project project = new Project(fileName, LocalDateTime.now());
+        Project project = new Project(fileName);
 
         Project savedProject = projectRepository.save(project);
         return projectMapper.entityToDto(savedProject);
