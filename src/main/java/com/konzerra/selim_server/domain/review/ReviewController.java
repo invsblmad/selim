@@ -37,8 +37,8 @@ public class ReviewController {
 
     @PutMapping(ReviewApi.update)
     public ReviewResponseDto updateGate(
-            @RequestPart("image") MultipartFile image,
-            @RequestPart(name = "saveDto", required = false) ReviewUpdateDto reviewUpdateDto
+            @RequestPart(name = "image", required = false) MultipartFile image,
+            @RequestPart(name = "updateDto") ReviewUpdateDto reviewUpdateDto
     ) {
         return reviewService.updateReview(image, reviewUpdateDto);
     }
