@@ -62,10 +62,13 @@ public class ReviewServiceImpl implements ReviewService {
                 .orElseThrow(() -> new NotFoundException("Review not found with id: "+ reviewUpdateDto.getId()));
         review.setFirstName(reviewUpdateDto.getFirstName());
         review.setLastName(reviewUpdateDto.getLastName());
-        review.setCustomerImage(reviewUpdateDto.getCustomerImage());
+
         review.setReviewText(reviewUpdateDto.getReviewText());
         review.setGateCategory(gateCategoryRepository.findById(reviewUpdateDto.getGateCategoryId())
                 .orElseThrow(() -> new NotFoundException("GateCategory not found with id: "+ reviewUpdateDto.getGateCategoryId())));
+        if(image != null){
+            fileStorageService.update(image, review.getCustomerImage());
+        }
         Review updatedReview = reviewRepository.save(review);
         return mapper.toDto(updatedReview);
     }

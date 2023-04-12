@@ -13,7 +13,6 @@ public class ReviewUpdateDto {
     private Long id;
     private String firstName;
     private String lastName;
-    private String customerImage;
     private String reviewText;
     private Long gateCategoryId;
 
